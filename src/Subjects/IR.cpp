@@ -15,18 +15,11 @@ uint16_t *IR::get_command()
         {
             return nullptr;
         }
-        return &this->ir_data.command;
+        notify_ir(&ir_data.command);
+        return &ir_data.command;
     }
     else
     {
         return nullptr;
-    }
-}
-
-void IR::notify_ir()
-{
-    for (IRObserver *o : observers)
-    {
-        o->on_notify_ir();
     }
 }

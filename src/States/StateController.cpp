@@ -1,11 +1,9 @@
 #include "StateController.h"
 
 StateController::StateController(IR &ir_) : ir(ir_), current_state(nullptr)
-
 {
     ir.add_observer(this);
     this->set_state(new Idle(*this));
-    Serial.println("State set");
 }
 
 void StateController::set_state(StateInterface *new_state)
@@ -17,7 +15,16 @@ void StateController::set_state(StateInterface *new_state)
     current_state = new_state;
 }
 
-void StateController::on_notify_ir()
+void StateController::run()
 {
-    current_state->ir_in(ir.get_command());
+    ir.get_command();
+    current_state->run();
+}
+
+void StateController::on_notify_ir(uint16_t *ir_command)
+{
+    if (ir_command != nullptr)
+    {
+        current_state->ir_in(ir_command);
+    }
 }

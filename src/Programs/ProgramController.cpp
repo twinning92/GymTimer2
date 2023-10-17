@@ -5,7 +5,7 @@ std::array<ProgramInterface *, NUM_PROGRAMS> ProgramController::program_array;
 
 ProgramController::ProgramController()
 {
-    // populate program_array
+    program_array[0] = new DownRound();
 }
 
 ProgramController *ProgramController::get_instance()

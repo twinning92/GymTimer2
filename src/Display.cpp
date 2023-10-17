@@ -52,28 +52,25 @@ void Digit::update_digit(uint8_t digit_to_render, CRGB colour)
 Display::Display() : digits{Digit(leds, 0 * LEDS_PER_DIGIT), Digit(leds, 1 * LEDS_PER_DIGIT), Digit(leds, 2 * LEDS_PER_DIGIT), Digit(leds, 3 * LEDS_PER_DIGIT), Digit(leds, 4 * LEDS_PER_DIGIT), Digit(leds, 5 * LEDS_PER_DIGIT)}
 {
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-    FastLED.setBrightness(255);
-    Serial.println("Settingup display");
+    FastLED.setBrightness(10);
 }
 
-void Display::write_string(const String string, uint8_t length, CRGB colour)
+void Display::write_string(String string, uint8_t length, CRGB colour)
 {
+    string.toLowerCase();
     // Serial.printf("Printing: \n");
     for (int i = 0; i < length; i++)
     {
         switch (string.charAt(i))
         {
             // Basically need to reverse the display, string comes in left-right but digit mappings are right-left
-        case 'A':
         case 'a':
             update_display(5 - i, 10, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
-
             break;
         case 'b':
             update_display(5 - i, 11, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
-
             break;
         case 'c':
             update_display(5 - i, 12, colour);
@@ -83,7 +80,6 @@ void Display::write_string(const String string, uint8_t length, CRGB colour)
             update_display(5 - i, 13, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
-        case 'E':
         case 'e':
             update_display(5 - i, 14, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
@@ -104,32 +100,26 @@ void Display::write_string(const String string, uint8_t length, CRGB colour)
             update_display(5 - i, 18, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
-        case 'l':
         case 'i':
             update_display(5 - i, 19, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
-        case 'F':
         case 'f':
             update_display(5 - i, 20, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'u':
-        case 'U':
             update_display(5 - i, 21, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'p':
-        case 'P':
             update_display(5 - i, 22, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
-        case 'J':
         case 'j':
             update_display(5 - i, 23, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
-        case 'S':
         case 's':
             update_display(5 - i, 24, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
@@ -147,11 +137,9 @@ void Display::write_string(const String string, uint8_t length, CRGB colour)
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'y':
-        case 'Y':
             update_display(5 - i, 28, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
-
         default:
             clear_digit(5 - i);
             // Serial.printf("default: clearing digit. unable to print '%c'\n", i, string.charAt(i));
@@ -186,6 +174,36 @@ void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB co
     digits[position].update_digit(number_to_render, colour);
 }
 
+void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB colour, bool blink)
+{
+    if (blink)
+    {
+        static unsigned long previous_time = 0;
+        static bool light_on = true;
+
+        unsigned long current_time = millis();
+
+        if (current_time - previous_time >= 500) // 500 ms has passed
+        {
+            previous_time = current_time; // Save the last toggle time
+            light_on = !light_on;         // Toggle the LED state
+        }
+
+        if (light_on)
+        {
+            update_display(position, number_to_render, colour);
+        }
+        else
+        {
+            clear_digit(position);
+        }
+    }
+    else
+    {
+        update_display(position, number_to_render, colour);
+    }
+}
+
 void Display::clear_digit(uint8_t position)
 {
     digits[position].update_digit(0, CRGB::Black);
@@ -208,4 +226,5 @@ void Display::push_to_display()
 void Display::clear_display()
 {
     write_string("      ", 6, CRGB::Black);
+    push_to_display();
 }

@@ -27,7 +27,6 @@ class IR : public IRSubject
 {
 public:
     IR();
-    void notify_ir() override;
     uint16_t *get_command();
 
 private:

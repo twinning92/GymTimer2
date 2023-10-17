@@ -14,7 +14,7 @@ enum class Phase
 };
 
 // Need both IR and Time to configure and run programs.
-class ProgramInterface : public IRObserver, public TimeObserver
+class ProgramInterface : public TimeObserver
 {
 protected:
     String program_name;
@@ -23,22 +23,19 @@ protected:
     uint16_t seconds_to_rest = 0;
     uint8_t total_num_rounds = 0;
 
-    bool need_rounds = false;
-    bool need_work = false;
-    bool need_rest = false;
-
 public:
     ProgramInterface(String program_name_);
 
-    virtual void init_display_info() = 0;
-    void start();
-
-    virtual void on_notify_ir() = 0;
-    virtual void on_notify_second() = 0;
     const String get_name();
 
-    virtual ~ProgramInterface() = default;
+    // virtual void start() = 0;
 
+    virtual void on_notify_second() = 0;
+
+    virtual ~ProgramInterface() = default;
+    bool need_rounds = false;
+    bool need_work = false;
+    bool need_rest = false;
     struct program_runner
     {
         Phase program_phase;

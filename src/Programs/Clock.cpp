@@ -2,6 +2,8 @@
 
 Clock::Clock(Display *display_) : display(display_)
 {
+    timer = TimerSignalEmitter::get_instance();
+    timer->add_observer(this);
 }
 
 void Clock::set_total_seconds(uint8_t hours, uint8_t minutes, uint8_t seconds)
@@ -9,7 +11,7 @@ void Clock::set_total_seconds(uint8_t hours, uint8_t minutes, uint8_t seconds)
     this->total_seconds = hours * 3600 + minutes * 60 + seconds;
 }
 
-void Clock::tick()
+void Clock::on_notify_second()
 {
     this->total_seconds++;
 }

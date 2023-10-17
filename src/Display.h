@@ -75,10 +75,13 @@ class Display
 public:
     static Display *get_instance();
     void push_to_display();
-    void write_string(const String, uint8_t length, CRGB colour);
+    void write_string(String string, uint8_t length, CRGB colour);
     void convert_to_display(const unsigned int total_seconds, CRGB colour);
+
     void update_display(uint8_t position, uint8_t number_to_render);
     void update_display(uint8_t position, uint8_t number_to_render, CRGB colour);
+    void update_display(uint8_t position, uint8_t number_to_render, CRGB colour, bool blink);
+
     void clear_digit(uint8_t position);
     void clear_display();
 

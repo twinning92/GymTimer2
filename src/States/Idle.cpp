@@ -1,7 +1,10 @@
 #include "Idle.h"
 
+Clock *Idle::clock69 = nullptr;
+
 void Idle::ir_in(uint16_t *ir_command)
 {
+
     switch (*ir_command)
     {
     case IR_UP:
@@ -13,10 +16,8 @@ void Idle::ir_in(uint16_t *ir_command)
     }
 }
 
-void Idle::on_notify_second()
+
+void Idle::run()
 {
-    // The state will catch the timer, then increment the clock number.
-    Serial.println("tick");
-    clock69->tick();
     clock69->display_time();
 }

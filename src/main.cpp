@@ -23,12 +23,14 @@ void setup()
 {
   Serial.begin(115200);
   display = Display::get_instance();
+  timer = TimerSignalEmitter::get_instance(TIMER_0);
+  timer->start_timer();
   prog_controller = ProgramController::get_instance();
   ir = new IR();
-  timer = new TimerSignalEmitter(TIMER_0);
   state_controller = new StateController(*ir);
 }
 
 void loop()
 {
+  state_controller->run();
 }
