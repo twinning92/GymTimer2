@@ -6,7 +6,10 @@ class TimeSubject
 {
 public:
     virtual ~TimeSubject() = default;
-    void add_observer(TimeObserver *observer) { observers.push_back(observer); }
+    void add_observer(TimeObserver *observer)
+    {
+        observers.push_back(observer);
+    }
     void remove_observer(TimeObserver *observer) { observers.remove(observer); }
     virtual void notify_second()
     {

@@ -4,9 +4,15 @@
 #include "Observers/TimeObserver.h"
 #include "Subjects/TimerSignalEmitter.h"
 
+#include "Programs/Jits.h"
+#include "Programs/Jits5.h"
+#include "Programs/Jits7.h"
 #include "Programs/DownRound.h"
+#include "Programs/Down.h"
+#include "Programs/UpRound.h"
+#include "Programs/Up.h"
 
-#define NUM_PROGRAMS 1
+#define NUM_PROGRAMS 7
 
 class ProgramController : public TimeObserver
 {
@@ -16,6 +22,8 @@ public:
     void set_selected_program(int8_t selected_program_index);
     void configure_selected_program(int8_t rounds_in, int16_t work_in, int16_t rest_in);
     void on_notify_second() override;
+    void start();
+    void stop();
 
     ProgramInterface *selected_program;
 

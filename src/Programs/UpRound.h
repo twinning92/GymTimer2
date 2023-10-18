@@ -2,10 +2,10 @@
 
 #include "../Interfaces/ProgramInterface.h"
 
-class DownRound : public ProgramInterface
+class UpRound : public ProgramInterface
 {
 public:
-    DownRound() : ProgramInterface("dn rnd")
+    UpRound() : ProgramInterface("up rnd")
     {
         need_rounds = true;
         need_rest = false;

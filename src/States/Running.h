@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Interfaces/StateInterface.h"
-
+#include "../Interfaces/ProgramInterface.h"
 #include "../States/StateController.h"
 
 #include "../Display.h"
@@ -13,6 +13,9 @@ public:
     void run_display() override;
 
 private:
+    ProgramController *program_controller;
     TimerSignalEmitter *timer;
+    struct ProgramInterface::program_runner &prog_runner;
     Display *display;
+    unsigned long previous_time = 0;
 };

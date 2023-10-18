@@ -52,7 +52,7 @@ void Digit::update_digit(uint8_t digit_to_render, CRGB colour)
 Display::Display() : digits{Digit(leds, 0 * LEDS_PER_DIGIT), Digit(leds, 1 * LEDS_PER_DIGIT), Digit(leds, 2 * LEDS_PER_DIGIT), Digit(leds, 3 * LEDS_PER_DIGIT), Digit(leds, 4 * LEDS_PER_DIGIT), Digit(leds, 5 * LEDS_PER_DIGIT)}
 {
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-    FastLED.setBrightness(255);
+    FastLED.setBrightness(50);
 }
 
 void Display::write_string(String string, uint8_t length, CRGB colour)
@@ -139,6 +139,12 @@ void Display::write_string(String string, uint8_t length, CRGB colour)
         case 'y':
             update_display(5 - i, 28, colour);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
+            break;
+        case '5':
+            update_display(5 - i, 5, colour);
+            break;
+        case '7':
+            update_display(5 - i, 7, colour);
             break;
         default:
             clear_digit(5 - i);

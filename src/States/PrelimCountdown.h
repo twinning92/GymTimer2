@@ -21,6 +21,6 @@ public:
 private:
     bool is_paused = false;
     TimerSignalEmitter *timer;
-    int8_t countdown_seconds = 10;
+    int8_t countdown_seconds = 2;
     Display *display;
 };

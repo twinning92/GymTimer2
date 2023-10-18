@@ -4,6 +4,7 @@ ConfiguringProgram::ConfiguringProgram(StateController &state_controller_, Progr
 {
     this->display = Display::get_instance();
     this->program_controller = ProgramController::get_instance();
+    display->clear_display();
 }
 
 void ConfiguringProgram::ir_in(uint16_t *ir_command)
@@ -42,11 +43,9 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
         {
         case IR_RIGHT:
             selected_digit_index = (selected_digit_index == 0) ? selected_digit_index = 3 : --selected_digit_index;
-            Serial.println(selected_digit_index);
             break;
         case IR_LEFT:
             selected_digit_index = (selected_digit_index == 3) ? selected_digit_index = 0 : ++selected_digit_index;
-            Serial.println(selected_digit_index);
             break;
         case IR_UP:
             work_mm_ss_in[selected_digit_index] = (work_mm_ss_in[selected_digit_index] == 9) ? work_mm_ss_in[selected_digit_index] = 0 : ++work_mm_ss_in[selected_digit_index];
@@ -82,7 +81,6 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             break;
         case IR_UP:
             rest_mm_ss_in[selected_digit_index] = (rest_mm_ss_in[selected_digit_index] == 9) ? rest_mm_ss_in[selected_digit_index] = 0 : ++rest_mm_ss_in[selected_digit_index];
-            Serial.println(rest_mm_ss_in[selected_digit_index]);
             break;
         case IR_DOWN:
             rest_mm_ss_in[selected_digit_index] = (rest_mm_ss_in[selected_digit_index] == 0) ? rest_mm_ss_in[selected_digit_index] = 9 : --rest_mm_ss_in[selected_digit_index];
@@ -111,6 +109,7 @@ void ConfiguringProgram::run_display()
         if (!selected_program.need_rounds)
         {
             config_state = state::work;
+            selected_digit_index = 3;
             break;
         }
         display->write_string("rnd", 3, CRGB::Green);

@@ -11,12 +11,13 @@ void NavigatingMenu::ir_in(uint16_t *ir_command)
 {
     switch (*ir_command)
     {
+    case IR_RIGHT:
     case IR_UP:
         this->program_index = (this->program_index + 1) % NUM_PROGRAMS;
         break;
-
+    case IR_LEFT:
     case IR_DOWN:
-        this->program_index = (this->program_index - 1) % NUM_PROGRAMS;
+        this->program_index = (this->program_index - 1 + NUM_PROGRAMS) % NUM_PROGRAMS;
         break;
     case IR_BACK:
         state_controller.set_state(new Idle(state_controller));

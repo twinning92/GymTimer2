@@ -5,7 +5,6 @@ TimerSignalEmitter *TimerSignalEmitter::instance = nullptr;
 TimerSignalEmitter::TimerSignalEmitter(int8_t timer_number)
 {
     TickType_t x_ticks_to_wait = pdMS_TO_TICKS(150);
-    Serial.println("Timer construct");
     hw_timer = timerBegin(timer_number, 80, true);
     timerAlarmWrite(hw_timer, 1000000, true);
     timerAttachInterrupt(hw_timer, on_timer, true);

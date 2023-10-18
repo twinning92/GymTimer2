@@ -28,7 +28,6 @@ void PrelimCountdown::ir_in(uint16_t *ir_command)
 
 void PrelimCountdown::on_notify_second()
 {
-    Serial.println(countdown_seconds);
     if (!is_paused)
     {
         this->countdown_seconds--;
@@ -37,7 +36,7 @@ void PrelimCountdown::on_notify_second()
         {
             // beep
         }
-        if (this->countdown_seconds <= 1)
+        if (this->countdown_seconds <= 0)
         {
             state_controller.set_state(new Running(state_controller));
         }
@@ -47,7 +46,7 @@ void PrelimCountdown::on_notify_second()
 void PrelimCountdown::run_display()
 {
     display->write_string("strt", 4, CRGB::Green);
-    display->update_display(1, this->countdown_seconds / 10, (this->countdown_seconds / 10 == 1) ? CRGB::Green : CRGB::Black);
-    display->update_display(0, this->countdown_seconds % 10, CRGB::Green);
+    display->update_display(1, this->countdown_seconds / 10, (this->countdown_seconds / 10 == 1) ? CRGB::Green : CRGB::Black, (is_paused) ? true : false);
+    display->update_display(0, this->countdown_seconds % 10, CRGB::Green, (is_paused) ? true : false);
     display->push_to_display();
 }

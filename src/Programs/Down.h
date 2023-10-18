@@ -2,12 +2,12 @@
 
 #include "../Interfaces/ProgramInterface.h"
 
-class DownRound : public ProgramInterface
+class Down : public ProgramInterface
 {
 public:
-    DownRound() : ProgramInterface("dn rnd")
+    Down() : ProgramInterface("dn    ")
     {
-        need_rounds = true;
+        need_rounds = false;
         need_rest = false;
         need_work = true;
 
