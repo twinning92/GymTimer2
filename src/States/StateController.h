@@ -12,8 +12,16 @@
 class StateController : public IStateController, public IRObserver
 {
 public:
-    StateController(IR &ir_);
+    enum class e_state
+    {
+        IDLE,
+        NAVIGATING_MENU,
+        CONFIGURE,
+        RUNNING,
+    };
 
+    StateController(IR &ir_);
+    ~StateController();
     void set_state(StateInterface *new_state) override;
     void run();
 

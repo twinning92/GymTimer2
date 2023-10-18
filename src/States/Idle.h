@@ -25,7 +25,7 @@ public:
         clock69->set_total_seconds(10, 50, 10);
     };
     void ir_in(uint16_t *ir_command) override;
-    void run() override;
+    void run_display() override;
 
 private:
     Display *display;

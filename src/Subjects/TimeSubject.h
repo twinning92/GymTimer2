@@ -10,9 +10,12 @@ public:
     void remove_observer(TimeObserver *observer) { observers.remove(observer); }
     virtual void notify_second()
     {
-        for (TimeObserver *o : observers)
+        if (!observers.empty())
         {
-            o->on_notify_second();
+            for (TimeObserver *o : observers)
+            {
+                o->on_notify_second();
+            }
         }
     }
 

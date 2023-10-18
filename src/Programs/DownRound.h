@@ -11,5 +11,5 @@ public:
         need_rest = false;
         need_work = true;
     };
-    void on_notify_second() override;
+    void second_in() override;
 };

@@ -6,7 +6,6 @@
 
 enum class Phase
 {
-    TEN_SECOND_TO_START,
     WORK,
     REST,
     PAUSED,
@@ -14,7 +13,7 @@ enum class Phase
 };
 
 // Need both IR and Time to configure and run programs.
-class ProgramInterface : public TimeObserver
+class ProgramInterface
 {
 protected:
     String program_name;
@@ -29,8 +28,7 @@ public:
     const String get_name();
 
     // virtual void start() = 0;
-
-    virtual void on_notify_second() = 0;
+    virtual void second_in() = 0;
 
     virtual ~ProgramInterface() = default;
     bool need_rounds = false;

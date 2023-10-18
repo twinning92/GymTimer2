@@ -9,7 +9,7 @@ class NavigatingMenu : public StateInterface
 public:
     NavigatingMenu(StateController &state_controller_);
     void ir_in(uint16_t *ir_command) override;
-    void run() override;
+    void run_display() override;
 
 private:
     int8_t program_index;

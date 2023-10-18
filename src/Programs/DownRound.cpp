@@ -1,5 +1,5 @@
 #include "DownRound.h"
 
-void DownRound::on_notify_second()
+void DownRound::second_in()
 {
 }

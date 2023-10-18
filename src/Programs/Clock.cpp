@@ -2,8 +2,13 @@
 
 Clock::Clock(Display *display_) : display(display_)
 {
-    timer = TimerSignalEmitter::get_instance();
+    timer = TimerSignalEmitter::get_instance(0);
     timer->add_observer(this);
+}
+
+Clock::~Clock()
+{
+    timer->remove_observer(this);
 }
 
 void Clock::set_total_seconds(uint8_t hours, uint8_t minutes, uint8_t seconds)

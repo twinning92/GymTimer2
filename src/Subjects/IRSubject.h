@@ -11,9 +11,12 @@ public:
     void remove_observer(IRObserver *observer) { observers.remove(observer); }
     virtual void notify_ir(uint16_t *ir_command)
     {
-        for (IRObserver *o : observers)
+        if (!observers.empty())
         {
-            o->on_notify_ir(ir_command);
+            for (IRObserver *o : observers)
+            {
+                o->on_notify_ir(ir_command);
+            }
         }
     }
 
