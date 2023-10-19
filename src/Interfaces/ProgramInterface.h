@@ -11,10 +11,6 @@ class ProgramInterface
 protected:
     String program_name;
 
-    uint16_t seconds_to_work = 0;
-    uint16_t seconds_to_rest = 0;
-    uint8_t total_num_rounds = 0;
-
 public:
     ProgramInterface(String program_name_);
 
@@ -28,6 +24,7 @@ public:
     bool need_rounds = false;
     bool need_work = false;
     bool need_rest = false;
+
     struct program_runner
     {
         bool paused = false;

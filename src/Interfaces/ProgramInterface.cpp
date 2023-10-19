@@ -9,6 +9,7 @@ const String ProgramInterface::get_name() { return program_name; }
 
 void ProgramInterface::reset_program()
 {
+    
     program_runner.currently_working = true;
     program_runner.finished_program = false;
     program_runner.paused = false;

@@ -9,6 +9,9 @@
 #include "Subjects/TimerSignalEmitter.h"
 #include "Subjects/IR.h"
 
+#include "Sensors/TempSensor.h"
+#include "Sensors/Buzzer.h"
+#include "Sensors/GPS.h"
 #define TIMER_0 0
 
 Display *display = nullptr;
@@ -16,6 +19,9 @@ ProgramController *prog_controller = nullptr;
 
 IR *ir = nullptr;
 TimerSignalEmitter *timer = nullptr;
+
+Buzzer buzzer;
+GPS gps_sensor;
 
 StateController *state_controller = nullptr;
 
@@ -34,3 +40,6 @@ void loop()
 {
   state_controller->run();
 }
+
+// TODO:
+// - Once rounds are configured, display work time until user presses go. So input config -> OK -> **display work time** -> OK -> start 10 second countdown

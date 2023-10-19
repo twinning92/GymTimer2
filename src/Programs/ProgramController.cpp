@@ -12,6 +12,8 @@ ProgramController::ProgramController()
     program_array[4] = new Up();
     program_array[5] = new Jits5();
     program_array[6] = new Jits7();
+    program_array[7] = new Interval();
+    program_array[8] = new Tabata();
     this->selected_program = nullptr;
     timer = TimerSignalEmitter::get_instance();
 }
@@ -43,7 +45,6 @@ void ProgramController::configure_selected_program(int8_t rounds_in, int16_t wor
     this->selected_program->program_runner.total_work_time = work_in;
     this->selected_program->program_runner.total_rest_time = rest_in;
     this->selected_program->special_program_init();
-    Serial.println("Configuring selected program");
 }
 
 void ProgramController::on_notify_second()

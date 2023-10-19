@@ -3,6 +3,8 @@
 #include "../Observers/TimeObserver.h"
 
 #include "../Subjects/TimerSignalEmitter.h"
+#include "../Sensors/GPS.h"
+
 #include "Display.h"
 class Clock : public TimeObserver
 {
@@ -16,7 +18,8 @@ public:
 private:
     Display *display;
     TimerSignalEmitter *timer;
-    uint total_seconds;
+    uint32_t total_seconds;
+    uint8_t check_gps_on_hours = 0;
     int colour_index = 0;
     std::array<int, 150> colours = {
         0xF0F8FF,
