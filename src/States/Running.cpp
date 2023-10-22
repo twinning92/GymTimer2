@@ -13,13 +13,15 @@ void Running::ir_in(uint16_t *ir_command)
     switch (*ir_command)
     {
     case IR_0:
-        prog_runner.finished_program = true;
+        program_controller->stop();
+        state_controller.set_state(new Idle(state_controller));
         break;
 
     case IR_OK:
         prog_runner.paused = !prog_runner.paused;
         break;
     }
+    3
 }
 
 void Running::run_display()
@@ -36,7 +38,6 @@ void Running::run_display()
         display->update_display(2, prog_runner.seconds_value / 60, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
         display->update_display(1, prog_runner.seconds_value / 10 % 6, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
         display->update_display(0, prog_runner.seconds_value % 10, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
-        Serial.println(prog_runner.seconds_value / 10);
         display->push_to_display();
     }
     else

@@ -11,7 +11,7 @@
 
 #include "Sensors/TempSensor.h"
 #include "Sensors/Buzzer.h"
-#include "Sensors/GPS.h"
+// #include "Sensors/GPS.h"
 #define TIMER_0 0
 
 Display *display = nullptr;
@@ -21,7 +21,7 @@ IR *ir = nullptr;
 TimerSignalEmitter *timer = nullptr;
 
 Buzzer buzzer;
-GPS gps_sensor;
+// GPS gps_sensor;
 
 StateController *state_controller = nullptr;
 

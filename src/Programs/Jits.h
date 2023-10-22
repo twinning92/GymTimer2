@@ -10,6 +10,7 @@ public:
         need_work = true;
         need_rest = true;
         need_rounds = false;
+        need_direction = false;
 
         program_runner.show_rounds = true;
     }

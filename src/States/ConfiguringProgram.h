@@ -4,12 +4,14 @@
 #include "../Subjects/IR.h"
 #include "Display.h"
 #include "PrelimCountdown.h"
+#include <stack>
 
 class ConfiguringProgram : public StateInterface
 {
 public:
     ConfiguringProgram(StateController &state_controller_, ProgramInterface &selected_program_);
     void ir_in(uint16_t *ir_command) override;
+    void previous_state();
     void run_display() override;
 
 private:
@@ -18,6 +20,7 @@ private:
         rounds,
         work,
         rest,
+        direction,
         finished_configuring,
     };
 
@@ -29,8 +32,11 @@ private:
     int8_t rounds_in = 0;
     int16_t work_seconds_in = 0;
     int16_t rest_seconds_in = 0;
+    bool count_up = true;
 
     Display *display;
     ProgramController *program_controller;
     ProgramInterface &selected_program;
+
+    std::stack<state> state_history;
 };

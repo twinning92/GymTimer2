@@ -13,7 +13,7 @@ Clock::~Clock()
 
 void Clock::set_total_seconds(uint8_t hours, uint8_t minutes, uint8_t seconds)
 {
-    this->total_seconds = gps_sensor.get_seconds();
+    // this->total_seconds = gps_sensor.get_seconds();
 }
 
 void Clock::on_notify_second()

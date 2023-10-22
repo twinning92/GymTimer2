@@ -17,6 +17,7 @@ public:
     const String get_name();
 
     // virtual void start() = 0;
+
     virtual void second_in() = 0;
     virtual void special_program_init() = 0;
     void reset_program();
@@ -24,6 +25,7 @@ public:
     bool need_rounds = false;
     bool need_work = false;
     bool need_rest = false;
+    bool need_direction = true;
 
     struct program_runner
     {
@@ -32,6 +34,7 @@ public:
         bool show_rounds;
         bool currently_working = true;
         bool finished_program = false;
+        bool count_up = false;
 
         CRGB round_colour = CRGB::Green;
 
@@ -42,5 +45,6 @@ public:
         int8_t rounds_value = 0;   // Rounds value to actually display
         int16_t seconds_value = 0; // Use seconds value to increment and calculate off. This is what is sent to the display.
         int16_t beep_milliseconds = 0;
+
     } program_runner;
 };

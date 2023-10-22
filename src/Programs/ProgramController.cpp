@@ -7,13 +7,10 @@ ProgramController::ProgramController()
 {
     program_array[0] = new Jits();
     program_array[1] = new DownRound();
-    program_array[2] = new Down();
-    program_array[3] = new UpRound();
-    program_array[4] = new Up();
-    program_array[5] = new Jits5();
-    program_array[6] = new Jits7();
-    program_array[7] = new Interval();
-    program_array[8] = new Tabata();
+    program_array[2] = new Interval();
+    program_array[3] = new Jits5();
+    program_array[4] = new Jits7();
+    program_array[5] = new Tabata();
     this->selected_program = nullptr;
     timer = TimerSignalEmitter::get_instance();
 }
@@ -37,13 +34,15 @@ void ProgramController::set_selected_program(int8_t selected_program_index)
     this->selected_program = program_array[selected_program_index];
 }
 
-void ProgramController::configure_selected_program(int8_t rounds_in, int16_t work_in, int16_t rest_in)
+void ProgramController::configure_selected_program(int8_t rounds_in, int16_t work_in, int16_t rest_in, bool count_up)
 {
     this->selected_program->program_runner.total_rounds = rounds_in;
     this->selected_program->program_runner.rounds_value = rounds_in;
 
     this->selected_program->program_runner.total_work_time = work_in;
     this->selected_program->program_runner.total_rest_time = rest_in;
+
+    this->selected_program->program_runner.count_up = count_up;
     this->selected_program->special_program_init();
 }
 

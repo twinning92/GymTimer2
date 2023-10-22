@@ -2,7 +2,10 @@
 
 void Interval::special_program_init()
 {
-    program_runner.seconds_value = program_runner.total_work_time;
+    if (!program_runner.count_up)
+    {
+        program_runner.seconds_value = program_runner.total_work_time;
+    }
 }
 
 void Interval::second_in()
