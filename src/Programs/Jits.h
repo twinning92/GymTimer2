@@ -5,7 +5,7 @@
 class Jits : public ProgramInterface
 {
 public:
-    Jits() : ProgramInterface("jits")
+    Jits(uint8_t program_index_) : ProgramInterface("jits", program_index_)
     {
         need_work = true;
         need_rest = true;

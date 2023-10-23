@@ -53,6 +53,10 @@ Display::Display() : digits{Digit(leds, 0 * LEDS_PER_DIGIT), Digit(leds, 1 * LED
 {
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(50);
+    leds[NUM_LEDS - 4] = CRGB::Red;
+    leds[NUM_LEDS - 3] = CRGB::Red;
+    leds[NUM_LEDS - 2] = CRGB::Red;
+    leds[NUM_LEDS - 1] = CRGB::Red;
 }
 
 void Display::write_string(String string, uint8_t length, CRGB colour)
@@ -170,14 +174,10 @@ void Display::convert_to_display(const unsigned int total_seconds, CRGB colour)
     update_display(3, high_minutes, colour);
 }
 
-void Display::update_display(uint8_t position, uint8_t number_to_render)
-{
-    digits[position].update_digit(number_to_render, CRGB::Red);
-}
-
 void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB colour)
 {
     digits[position].update_digit(number_to_render, colour);
+    blink_colon();
 }
 
 void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB colour, bool blink)
@@ -207,6 +207,35 @@ void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB co
     else
     {
         update_display(position, number_to_render, colour);
+    }
+}
+
+void Display::blink_colon()
+{
+    static unsigned long previous_time = 0;
+    static bool light_on = true;
+
+    unsigned long current_time = millis();
+
+    if (current_time - previous_time >= 500) // 500 ms has passed
+    {
+        previous_time = current_time; // Save the last toggle time
+        light_on = !light_on;         // Toggle the LED state
+    }
+
+    if (light_on)
+    {
+        leds[NUM_LEDS - 4] = CRGB::Red;
+        leds[NUM_LEDS - 3] = CRGB::Red;
+        leds[NUM_LEDS - 2] = CRGB::Red;
+        leds[NUM_LEDS - 1] = CRGB::Red;
+    }
+    else
+    {
+        leds[NUM_LEDS - 4] = CRGB::Black;
+        leds[NUM_LEDS - 3] = CRGB::Black;
+        leds[NUM_LEDS - 2] = CRGB::Black;
+        leds[NUM_LEDS - 1] = CRGB::Black;
     }
 }
 

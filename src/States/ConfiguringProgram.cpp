@@ -27,17 +27,16 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             selected_digit_index = (selected_digit_index == 1) ? --selected_digit_index : ++selected_digit_index;
             break;
         case IR_OK:
+            state_history.push(config_state);
             config_state = state::work;
             rounds_in = rounds_in_rr[1] * 10;
             rounds_in += rounds_in_rr[0];
-
-            state_history.push(config_state);
 
             display->clear_display();
             selected_digit_index = 3;
             break;
         case IR_BACK:
-            state_controller.set_state(new NavigatingMenu(state_controller)); // or go back to IDLE? Dont clear display here, because display isnt set immediately by state so it shows blank until next press
+            state_controller.set_state(new NavigatingMenu(state_controller, selected_program.get_program_index())); // or go back to IDLE? Dont clear display here, because display isnt set immediately by state so it shows blank until next press
             break;
         default:
             break;
@@ -59,14 +58,13 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             work_mm_ss_in[selected_digit_index] = (work_mm_ss_in[selected_digit_index] == 0) ? work_mm_ss_in[selected_digit_index] = 9 : --work_mm_ss_in[selected_digit_index];
             break;
         case IR_OK:
+            state_history.push(config_state);
             config_state = state::rest;
 
             work_seconds_in = work_mm_ss_in[0];
             work_seconds_in += work_mm_ss_in[1] * 10;
             work_seconds_in += work_mm_ss_in[2] * 60;
             work_seconds_in += work_mm_ss_in[3] * 600;
-
-            state_history.push(config_state);
 
             display->clear_display();
             selected_digit_index = 3;
@@ -93,20 +91,19 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             rest_mm_ss_in[selected_digit_index] = (rest_mm_ss_in[selected_digit_index] == 0) ? rest_mm_ss_in[selected_digit_index] = 9 : --rest_mm_ss_in[selected_digit_index];
             break;
         case IR_OK:
+            state_history.push(config_state);
             config_state = state::direction;
             rest_seconds_in = rest_mm_ss_in[0];
             rest_seconds_in += rest_mm_ss_in[1] * 10;
             rest_seconds_in += rest_mm_ss_in[2] * 60;
             rest_seconds_in += rest_mm_ss_in[3] * 600;
-
-            state_history.push(config_state);
-
             display->clear_display();
             break;
         case IR_BACK:
             previous_state();
             break;
         }
+        break;
     case state::direction:
         switch (*ir_command)
         {
@@ -117,6 +114,7 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             count_up = !count_up;
             break;
         case IR_OK:
+            state_history.push(config_state);
             config_state = state::finished_configuring;
             display->clear_display();
             break;
@@ -129,11 +127,13 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
         switch (*ir_command)
         {
         case IR_OK:
-            program_controller->configure_selected_program(rounds_in, work_seconds_in, rest_seconds_in, count_up);
             state_controller.set_state(new PrelimCountdown(state_controller));
             break;
         case IR_BACK:
             previous_state();
+            break;
+        case IR_0:
+            state_controller.set_state(new Idle(state_controller));
             break;
         }
         break;
@@ -141,9 +141,17 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
 }
 void ConfiguringProgram::previous_state()
 {
-    config_state = state_history.top();
-    state_history.pop();
-    display->clear_display();
+    if (!state_history.empty())
+    {
+        display->clear_display();
+        config_state = state_history.top();
+        state_history.pop();
+        selected_digit_index = 0;
+    }
+    else
+    {
+        state_controller.set_state(new NavigatingMenu(state_controller, selected_program.get_program_index())); // or go back to IDLE? Dont clear display here, because display isnt set immediately by state so it shows blank until next press
+    }
 }
 
 void ConfiguringProgram::run_display()
@@ -160,8 +168,8 @@ void ConfiguringProgram::run_display()
         }
         display->write_string("rnd", 3, CRGB::Green);
 
-        display->update_display(0, rounds_in_rr[0], CRGB::Red, 0 == selected_digit_index);
-        display->update_display(1, rounds_in_rr[1], CRGB::Red, 1 == selected_digit_index);
+        display->update_display(0, rounds_in_rr[0], CRGB::Red, (selected_digit_index == 0));
+        display->update_display(1, rounds_in_rr[1], CRGB::Red, (selected_digit_index == 1));
 
         display->push_to_display();
         break;
@@ -199,10 +207,13 @@ void ConfiguringProgram::run_display()
         display->push_to_display();
         break;
     case state::finished_configuring:
-        display->update_display(3, work_mm_ss_in[3], CRGB::Red);
-        display->update_display(2, work_mm_ss_in[2], CRGB::Red);
-        display->update_display(1, work_mm_ss_in[1], CRGB::Red);
-        display->update_display(0, work_mm_ss_in[0], CRGB::Red);
+        program_controller->configure_selected_program(rounds_in, work_seconds_in, rest_seconds_in, count_up);
+
+        display->update_display(3, selected_program.program_runner.total_work_time / 600, CRGB::Red);
+        display->update_display(2, selected_program.program_runner.total_work_time / 60 % 10, CRGB::Red);
+        display->update_display(1, selected_program.program_runner.total_work_time / 10 % 6, CRGB::Red);
+        display->update_display(0, selected_program.program_runner.total_work_time % 10, CRGB::Red);
+
         display->push_to_display();
         break;
     }

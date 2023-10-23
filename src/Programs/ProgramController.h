@@ -11,7 +11,7 @@
 #include "Programs/Tabata.h"
 #include "Programs/Interval.h"
 
-#define NUM_PROGRAMS 7
+#define NUM_PROGRAMS 6
 
 class ProgramController : public TimeObserver
 {

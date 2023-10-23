@@ -19,6 +19,7 @@ public:
     void run_display() override;
 
 private:
+    ProgramController *program_controller;
     bool is_paused = false;
     TimerSignalEmitter *timer;
     int8_t countdown_seconds = 2;

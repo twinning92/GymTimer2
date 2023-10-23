@@ -19,7 +19,6 @@ void Clock::set_total_seconds(uint8_t hours, uint8_t minutes, uint8_t seconds)
 void Clock::on_notify_second()
 {
     this->total_seconds++;
-    buzzer.start(1);
     // this->colour_index++;
     // Serial.printf("colours[colour_index]: 0x%x\n", colours[colour_index]);
 }

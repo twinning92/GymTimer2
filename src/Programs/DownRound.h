@@ -5,7 +5,7 @@
 class DownRound : public ProgramInterface
 {
 public:
-    DownRound() : ProgramInterface("rounds")
+    DownRound(uint8_t program_index_) : ProgramInterface("rounds", program_index_)
     {
         need_rounds = true;
         need_rest = false;

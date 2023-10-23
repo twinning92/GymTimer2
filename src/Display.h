@@ -2,7 +2,7 @@
 #include <FastLED.h>
 
 #define LEDS_PER_DIGIT ((4 * 8) + (3 * 9))
-#define NUM_LEDS ((LEDS_PER_DIGIT * 6) + 8)
+#define NUM_LEDS ((LEDS_PER_DIGIT * 6) + 4)
 #define NUM_SEGMENTS 7
 
 #define DATA_PIN 15
@@ -78,14 +78,15 @@ public:
     void write_string(String string, uint8_t length, CRGB colour);
     void convert_to_display(const unsigned int total_seconds, CRGB colour);
 
-    void update_display(uint8_t position, uint8_t number_to_render);
-    void update_display(uint8_t position, uint8_t number_to_render, CRGB colour);
+    void update_display(uint8_t position, uint8_t number_to_render, CRGB colour = CRGB::Red);
     void update_display(uint8_t position, uint8_t number_to_render, CRGB colour, bool blink);
-
+    void blink_colon();
     void clear_digit(uint8_t position);
     void clear_display();
 
 private:
+    std::array<int, 3> rgb = {0};
+
     Display();
     static Display *instance;
     Digit digits[6];

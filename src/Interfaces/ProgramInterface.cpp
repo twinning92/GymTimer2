@@ -1,15 +1,21 @@
 #include "ProgramInterface.h"
 
-ProgramInterface::ProgramInterface(String program_name_)
+ProgramInterface::ProgramInterface(String program_name_, uint8_t program_index_)
 {
     this->program_name = program_name_;
+    this->program_index = program_index_;
 }
 
 const String ProgramInterface::get_name() { return program_name; }
 
+const uint8_t ProgramInterface::get_program_index()
+{
+    return program_index;
+}
+
 void ProgramInterface::reset_program()
 {
-    
+
     program_runner.currently_working = true;
     program_runner.finished_program = false;
     program_runner.paused = false;

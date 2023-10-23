@@ -1,10 +1,10 @@
 #include "NavigatingMenu.h"
 
-NavigatingMenu::NavigatingMenu(StateController &state_controller_) : StateInterface(state_controller_)
+NavigatingMenu::NavigatingMenu(StateController &state_controller_, uint8_t start_index) : StateInterface(state_controller_)
 {
     this->display = Display::get_instance();
     this->program_controller = ProgramController::get_instance();
-    this->program_index = 0;
+    this->program_index = start_index;
 }
 
 void NavigatingMenu::ir_in(uint16_t *ir_command)
@@ -19,12 +19,33 @@ void NavigatingMenu::ir_in(uint16_t *ir_command)
     case IR_DOWN:
         this->program_index = (this->program_index - 1 + NUM_PROGRAMS) % NUM_PROGRAMS;
         break;
+    case IR_1:
+        this->program_index = 0;
+        break;
+    case IR_2:
+        this->program_index = 1;
+        break;
+    case IR_3:
+        this->program_index = 2;
+        break;
+    case IR_4:
+        this->program_index = 3;
+        break;
+    case IR_5:
+        this->program_index = 4;
+        break;
+    case IR_6:
+        this->program_index = 5;
+        break;
+    case IR_0:
     case IR_BACK:
         state_controller.set_state(new Idle(state_controller));
         break;
     case IR_OK:
         program_controller->set_selected_program(program_index);
         state_controller.set_state(new ConfiguringProgram(state_controller, *program_controller->selected_program));
+        break;
+    default:
         break;
     }
 }

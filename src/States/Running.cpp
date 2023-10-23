@@ -13,11 +13,18 @@ void Running::ir_in(uint16_t *ir_command)
     switch (*ir_command)
     {
     case IR_0:
-        program_controller->stop();
-        state_controller.set_state(new Idle(state_controller));
-        break;
+        // Just pause and wait for second press. This way the user can abandon by pressing ok
+        prog_runner.paused = true;
+        end_confirm_count++;
+        if (end_confirm_count == 2)
+        {
+            program_controller->stop();
+            prog_runner.finished_program = true;
+        }
 
+        break;
     case IR_OK:
+        end_confirm_count = 0;
         prog_runner.paused = !prog_runner.paused;
         break;
     }
@@ -29,8 +36,9 @@ void Running::run_display()
     {
         if (prog_runner.show_rounds)
         {
-            display->update_display(5, prog_runner.rounds_value / 10, (prog_runner.rounds_value / 10 != 0) ? prog_runner.round_colour : CRGB::Black);
-            display->update_display(4, prog_runner.rounds_value % 10, prog_runner.round_colour);
+            // Don't display the leading 0 in rounds. Additionally, toggle between green and yellow for round colour depending on whether resting or working to provide contrast
+            display->update_display(5, prog_runner.rounds_value / 10, (prog_runner.rounds_value / 10 != 0) ? ((prog_runner.currently_working) ? CRGB::Green : CRGB::Red) : CRGB::Black);
+            display->update_display(4, prog_runner.rounds_value % 10, (prog_runner.currently_working) ? CRGB::Green : CRGB::Red);
         }
 
         display->update_display(3, prog_runner.seconds_value / 600, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
@@ -43,13 +51,16 @@ void Running::run_display()
     {
         // Absolutely filthy. But I can't utilise millis(), as this is being called in the loop for an indefinite amount of time. Other blinking function also blinks forever, the difference there being that the program will move on and update
         //  the display. The intention of this snippet is to just blink the numbers for a few seconds after the program completes.
-        for (int i = 0; i < 370; i++)
+        if (end_confirm_count != 2)
         {
-            display->update_display(3, 0, CRGB::Red, true);
-            display->update_display(2, 0, CRGB::Red, true);
-            display->update_display(1, 0, CRGB::Red, true);
-            display->update_display(0, 0, CRGB::Red, true);
-            display->push_to_display();
+            for (int i = 0; i < 370; i++)
+            {
+                display->update_display(3, 0, CRGB::Red, true);
+                display->update_display(2, 0, CRGB::Red, true);
+                display->update_display(1, 0, CRGB::Red, true);
+                display->update_display(0, 0, CRGB::Red, true);
+                display->push_to_display();
+            }
         }
         state_controller.set_state(new Idle(state_controller));
         program_controller->stop();

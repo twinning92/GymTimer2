@@ -5,12 +5,12 @@ std::array<ProgramInterface *, NUM_PROGRAMS> ProgramController::program_array;
 
 ProgramController::ProgramController()
 {
-    program_array[0] = new Jits();
-    program_array[1] = new DownRound();
-    program_array[2] = new Interval();
-    program_array[3] = new Jits5();
-    program_array[4] = new Jits7();
-    program_array[5] = new Tabata();
+    program_array[0] = new Jits(0);
+    program_array[1] = new DownRound(1);
+    program_array[2] = new Interval(2);
+    program_array[3] = new Jits5(3);
+    program_array[4] = new Jits7(4);
+    program_array[5] = new Tabata(5);
     this->selected_program = nullptr;
     timer = TimerSignalEmitter::get_instance();
 }

@@ -25,7 +25,7 @@ private:
     };
 
     state config_state = state::rounds;
-    int8_t selected_digit_index = 1;
+    int8_t selected_digit_index = 0;
     std::array<uint8_t, 2> rounds_in_rr = {0};
     std::array<uint8_t, 4> work_mm_ss_in = {0};
     std::array<uint8_t, 4> rest_mm_ss_in = {0};

@@ -15,6 +15,7 @@ public:
 private:
     ProgramController *program_controller;
     TimerSignalEmitter *timer;
+    int8_t end_confirm_count = 0;
     struct ProgramInterface::program_runner &prog_runner;
     Display *display;
     unsigned long previous_time = 0;

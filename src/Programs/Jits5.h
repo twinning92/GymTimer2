@@ -5,11 +5,12 @@
 class Jits5 : public ProgramInterface
 {
 public:
-    Jits5() : ProgramInterface("5-jits")
+    Jits5(uint8_t program_index_) : ProgramInterface("5-jits", program_index_)
     {
         need_work = false;
         need_rest = false;
         need_rounds = false;
+        need_direction = false;
 
         program_runner.show_rounds = true;
     }

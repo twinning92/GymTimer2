@@ -4,6 +4,7 @@ PrelimCountdown::PrelimCountdown(StateController &state_controller_) : StateInte
 {
     display = Display::get_instance();
     timer = TimerSignalEmitter::get_instance(0);
+    program_controller = ProgramController::get_instance();
     timer->add_observer(this);
 }
 
@@ -17,11 +18,14 @@ void PrelimCountdown::ir_in(uint16_t *ir_command)
     switch (*ir_command)
     {
     case IR_BACK:
-        state_controller.set_state(new NavigatingMenu(state_controller));
+        state_controller.set_state(new ConfiguringProgram(state_controller, *program_controller->selected_program));
         break;
     case IR_OK:
         // Pause
         is_paused = !is_paused;
+        break;
+    case IR_0:
+        state_controller.set_state(new Idle(state_controller));
         break;
     }
 }
@@ -32,12 +36,13 @@ void PrelimCountdown::on_notify_second()
     {
         this->countdown_seconds--;
         // go to one, so the 0 tick is the state transition.
-        if (this->countdown_seconds <= 3)
+        if (this->countdown_seconds <= 3 && this->countdown_seconds > 0)
         {
-            // beep
+            buzzer.start(1);
         }
         if (this->countdown_seconds <= 0)
         {
+            buzzer.start(3);
             state_controller.set_state(new Running(state_controller));
         }
     }

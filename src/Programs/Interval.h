@@ -5,7 +5,7 @@
 class Interval : public ProgramInterface
 {
 public:
-    Interval() : ProgramInterface("int   ")
+    Interval(uint8_t program_index_) : ProgramInterface("int   ", program_index_)
     {
         need_work = true;
         need_rest = true;
