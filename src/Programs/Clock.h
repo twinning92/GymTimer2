@@ -4,7 +4,7 @@
 
 #include "../Subjects/TimerSignalEmitter.h"
 #include "../Sensors/GPS.h"
-
+#include "../Sensors/Buzzer.h"
 #include "Display.h"
 class Clock : public TimeObserver
 {

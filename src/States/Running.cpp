@@ -21,7 +21,6 @@ void Running::ir_in(uint16_t *ir_command)
         prog_runner.paused = !prog_runner.paused;
         break;
     }
-    3
 }
 
 void Running::run_display()
