@@ -21,7 +21,7 @@ IR *ir = nullptr;
 TimerSignalEmitter *timer = nullptr;
 
 Buzzer buzzer;
-// GPS gps_sensor;
+GPS gps_sensor;
 
 StateController *state_controller = nullptr;
 

@@ -22,7 +22,7 @@ public:
             this->clock69 = new Clock(display);
         }
         // Change to query RTC time as new structure won't implement clock keeping time in the background. Could be achieved by moving clock into main class?
-        clock69->set_total_seconds(10, 50, 10);
+        // clock69->set_total_seconds(10, 50, 10);
     };
     void ir_in(uint16_t *ir_command) override;
     void run_display() override;

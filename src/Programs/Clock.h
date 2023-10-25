@@ -1,25 +1,21 @@
 #pragma once
 #include <Arduino.h>
-#include "../Observers/TimeObserver.h"
-
-#include "../Subjects/TimerSignalEmitter.h"
-#include "../Sensors/GPS.h"
-#include "../Sensors/Buzzer.h"
 #include "Display.h"
-class Clock : public TimeObserver
+#include "../Sensors/GPS.h"
+class Clock
 {
 public:
     Clock(Display *display_);
     ~Clock();
     void display_time();
     void set_total_seconds(uint8_t hours, uint8_t minutes, uint8_t seconds);
-    void on_notify_second();
 
 private:
     Display *display;
-    TimerSignalEmitter *timer;
-    uint32_t total_seconds;
-    uint8_t check_gps_on_hours = 0;
+    uint8_t hours;
+    uint8_t minutes;
+    uint8_t seconds;
+
     int colour_index = 0;
     std::array<int, 150> colours = {
         0xF0F8FF,

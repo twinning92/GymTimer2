@@ -59,7 +59,7 @@ Display::Display() : digits{Digit(leds, 0 * LEDS_PER_DIGIT), Digit(leds, 1 * LED
     leds[NUM_LEDS - 1] = CRGB::Red;
 }
 
-void Display::write_string(String string, uint8_t length, CRGB colour)
+void Display::write_string(String string, uint8_t length, CRGB colour, bool blink)
 {
     string.toLowerCase();
     // Serial.printf("Printing: \n");
@@ -69,86 +69,89 @@ void Display::write_string(String string, uint8_t length, CRGB colour)
         {
             // Basically need to reverse the display, string comes in left-right but digit mappings are right-left
         case 'a':
-            update_display(5 - i, 10, colour);
+            update_display(5 - i, 10, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'b':
-            update_display(5 - i, 11, colour);
+            update_display(5 - i, 11, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'c':
-            update_display(5 - i, 12, colour);
+            update_display(5 - i, 12, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'd':
-            update_display(5 - i, 13, colour);
+            update_display(5 - i, 13, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'e':
-            update_display(5 - i, 14, colour);
+            update_display(5 - i, 14, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'n':
-            update_display(5 - i, 15, colour);
+            update_display(5 - i, 15, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'o':
-            update_display(5 - i, 16, colour);
+            update_display(5 - i, 16, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'r':
-            update_display(5 - i, 17, colour);
+            update_display(5 - i, 17, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 't':
-            update_display(5 - i, 18, colour);
+            update_display(5 - i, 18, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'i':
-            update_display(5 - i, 19, colour);
+            update_display(5 - i, 19, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'f':
-            update_display(5 - i, 20, colour);
+            update_display(5 - i, 20, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'u':
-            update_display(5 - i, 21, colour);
+            update_display(5 - i, 21, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'p':
-            update_display(5 - i, 22, colour);
+            update_display(5 - i, 22, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'j':
-            update_display(5 - i, 23, colour);
+            update_display(5 - i, 23, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 's':
-            update_display(5 - i, 24, colour);
+            update_display(5 - i, 24, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case ' ':
-            update_display(5 - i, 25, colour);
+            update_display(5 - i, 25, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case '_':
-            update_display(5 - i, 26, colour);
+            update_display(5 - i, 26, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case '-':
-            update_display(5 - i, 27, colour);
+            update_display(5 - i, 27, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'y':
-            update_display(5 - i, 28, colour);
+            update_display(5 - i, 28, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case '5':
-            update_display(5 - i, 5, colour);
+            update_display(5 - i, 5, colour, blink);
             break;
         case '7':
-            update_display(5 - i, 7, colour);
+            update_display(5 - i, 7, colour, blink);
+            break;
+        case 'g':
+            update_display(5 - i, 29, colour, blink);
             break;
         default:
             clear_digit(5 - i);
@@ -157,21 +160,6 @@ void Display::write_string(String string, uint8_t length, CRGB colour)
         }
     }
     // Serial.printf("length: %d\n", length);
-}
-
-void Display::convert_to_display(const unsigned int total_seconds, CRGB colour)
-{
-    uint8_t low_seconds = total_seconds % 10;
-    uint8_t high_seconds = total_seconds / 10 % 6;
-
-    uint8_t total_minutes = (total_seconds / 60) % 60;
-    uint8_t low_minutes = total_minutes % 10;
-    uint8_t high_minutes = total_minutes / 10;
-
-    update_display(0, low_seconds, colour);
-    update_display(1, high_seconds, colour);
-    update_display(2, low_minutes, colour);
-    update_display(3, high_minutes, colour);
 }
 
 void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB colour)

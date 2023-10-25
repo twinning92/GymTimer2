@@ -36,7 +36,6 @@ private:
     uint8_t current_value;
     uint16_t digit_led_offset;
 
-    // TODO: talk to chat gpt about how to make this a global table.
     const uint8_t digit_segment_mappings[50] = {
         0b01111110, // 0 0
         0b01000010, // 1 1
@@ -67,6 +66,7 @@ private:
         0b00100000, // "_" 26
         0b00000001, // "-" 27
         0b01101011, // "y" 28
+        0b01101111, // "g" 29
     };
 };
 
@@ -75,8 +75,7 @@ class Display
 public:
     static Display *get_instance();
     void push_to_display();
-    void write_string(String string, uint8_t length, CRGB colour);
-    void convert_to_display(const unsigned int total_seconds, CRGB colour);
+    void write_string(String string, uint8_t length, CRGB colour, bool blink = false);
 
     void update_display(uint8_t position, uint8_t number_to_render, CRGB colour = CRGB::Red);
     void update_display(uint8_t position, uint8_t number_to_render, CRGB colour, bool blink);
