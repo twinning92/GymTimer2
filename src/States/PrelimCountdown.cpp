@@ -6,6 +6,7 @@ PrelimCountdown::PrelimCountdown(StateController &state_controller_) : StateInte
     timer = TimerSignalEmitter::get_instance(0);
     program_controller = ProgramController::get_instance();
     timer->add_observer(this);
+    display->clear_colon();
 }
 
 PrelimCountdown::~PrelimCountdown()

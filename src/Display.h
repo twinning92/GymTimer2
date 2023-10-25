@@ -80,15 +80,15 @@ public:
 
     void update_display(uint8_t position, uint8_t number_to_render, CRGB colour = CRGB::Red);
     void update_display(uint8_t position, uint8_t number_to_render, CRGB colour, bool blink);
-    void blink_colon();
+    void toggle_colon(CRGB colour);
+    void clear_colon();
     void clear_digit(uint8_t position);
     void clear_display();
 
 private:
-    std::array<int, 3> rgb = {0};
-
     Display();
     static Display *instance;
     Digit digits[6];
+
     CRGB leds[NUM_LEDS];
 };

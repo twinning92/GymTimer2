@@ -17,7 +17,10 @@ public:
         {
             for (TimeObserver *o : observers)
             {
-                o->on_notify_second();
+                if (o != nullptr)
+                {
+                    o->on_notify_second();
+                }
             }
         }
     }

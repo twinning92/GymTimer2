@@ -12,7 +12,7 @@ void Running::ir_in(uint16_t *ir_command)
 {
     switch (*ir_command)
     {
-    case IR_0:
+    case IR_HASH:
         // Just pause and wait for second press. This way the user can abandon by pressing ok
         prog_runner.paused = true;
         end_confirm_count++;
@@ -45,22 +45,22 @@ void Running::run_display()
         display->update_display(2, prog_runner.seconds_value / 60, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
         display->update_display(1, prog_runner.seconds_value / 10 % 6, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
         display->update_display(0, prog_runner.seconds_value % 10, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
+        (prog_runner.seconds_value % 2 == 0) ? display->toggle_colon((prog_runner.currently_working) ? CRGB::Red : CRGB::Green) : display->clear_colon();
         display->push_to_display();
     }
     else
     {
         // Absolutely filthy. But I can't utilise millis(), as this is being called in the loop for an indefinite amount of time. Other blinking function also blinks forever, the difference there being that the program will move on and update
         //  the display. The intention of this snippet is to just blink the numbers for a few seconds after the program completes.
-        if (end_confirm_count != 2)
+
+        for (int i = 0; i < 370; i++)
         {
-            for (int i = 0; i < 370; i++)
-            {
-                display->update_display(3, 0, CRGB::Red, true);
-                display->update_display(2, 0, CRGB::Red, true);
-                display->update_display(1, 0, CRGB::Red, true);
-                display->update_display(0, 0, CRGB::Red, true);
-                display->push_to_display();
-            }
+            display->update_display(3, 0, CRGB::Red, true);
+            display->update_display(2, 0, CRGB::Red, true);
+            display->update_display(1, 0, CRGB::Red, true);
+            display->update_display(0, 0, CRGB::Red, true);
+            display->push_to_display();
+            buzzer.start(3);
         }
         state_controller.set_state(new Idle(state_controller));
         program_controller->stop();

@@ -2,7 +2,7 @@
 
 void Tabata::special_program_init()
 {
-    program_runner.total_rounds = 8;
+     program_runner.total_rounds = 8;
     program_runner.total_work_time = 20;
     program_runner.total_rest_time = 10;
     program_runner.seconds_value = program_runner.total_work_time;
@@ -25,7 +25,7 @@ void Tabata::second_in()
                 if (program_runner.rounds_value <= 1)
                 {
                     program_runner.finished_program = true;
-                    buzzer.start(30);
+                    buzzer.start(10);
                 }
                 else
                 {
@@ -50,4 +50,18 @@ void Tabata::second_in()
             }
         }
     }
+}
+
+void Tabata::reset_program()
+{
+    need_work = false;
+    need_rest = false;
+    need_rounds = false;
+    need_direction = false;
+    program_runner.show_rounds = true;
+    program_runner.total_rounds = 8;
+    program_runner.total_work_time = 20;
+    program_runner.total_rest_time = 10;
+    program_runner.seconds_value = program_runner.total_work_time;
+    program_runner.rounds_value = program_runner.total_rounds;
 }

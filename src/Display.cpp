@@ -52,7 +52,7 @@ void Digit::update_digit(uint8_t digit_to_render, CRGB colour)
 Display::Display() : digits{Digit(leds, 0 * LEDS_PER_DIGIT), Digit(leds, 1 * LEDS_PER_DIGIT), Digit(leds, 2 * LEDS_PER_DIGIT), Digit(leds, 3 * LEDS_PER_DIGIT), Digit(leds, 4 * LEDS_PER_DIGIT), Digit(leds, 5 * LEDS_PER_DIGIT)}
 {
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
-    FastLED.setBrightness(50);
+    FastLED.setBrightness(255);
     leds[NUM_LEDS - 4] = CRGB::Red;
     leds[NUM_LEDS - 3] = CRGB::Red;
     leds[NUM_LEDS - 2] = CRGB::Red;
@@ -177,7 +177,6 @@ void Display::convert_to_display(const unsigned int total_seconds, CRGB colour)
 void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB colour)
 {
     digits[position].update_digit(number_to_render, colour);
-    blink_colon();
 }
 
 void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB colour, bool blink)
@@ -210,33 +209,20 @@ void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB co
     }
 }
 
-void Display::blink_colon()
+void Display::toggle_colon(CRGB colour)
 {
-    static unsigned long previous_time = 0;
-    static bool light_on = true;
+    leds[NUM_LEDS - 4] = colour;
+    leds[NUM_LEDS - 3] = colour;
+    leds[NUM_LEDS - 2] = colour;
+    leds[NUM_LEDS - 1] = colour;
+}
 
-    unsigned long current_time = millis();
-
-    if (current_time - previous_time >= 500) // 500 ms has passed
-    {
-        previous_time = current_time; // Save the last toggle time
-        light_on = !light_on;         // Toggle the LED state
-    }
-
-    if (light_on)
-    {
-        leds[NUM_LEDS - 4] = CRGB::Red;
-        leds[NUM_LEDS - 3] = CRGB::Red;
-        leds[NUM_LEDS - 2] = CRGB::Red;
-        leds[NUM_LEDS - 1] = CRGB::Red;
-    }
-    else
-    {
-        leds[NUM_LEDS - 4] = CRGB::Black;
-        leds[NUM_LEDS - 3] = CRGB::Black;
-        leds[NUM_LEDS - 2] = CRGB::Black;
-        leds[NUM_LEDS - 1] = CRGB::Black;
-    }
+void Display::clear_colon()
+{
+    leds[NUM_LEDS - 4] = CRGB::Black;
+    leds[NUM_LEDS - 3] = CRGB::Black;
+    leds[NUM_LEDS - 2] = CRGB::Black;
+    leds[NUM_LEDS - 1] = CRGB::Black;
 }
 
 void Display::clear_digit(uint8_t position)

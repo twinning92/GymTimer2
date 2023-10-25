@@ -5,6 +5,7 @@ NavigatingMenu::NavigatingMenu(StateController &state_controller_, uint8_t start
     this->display = Display::get_instance();
     this->program_controller = ProgramController::get_instance();
     this->program_index = start_index;
+    display->clear_colon();
 }
 
 void NavigatingMenu::ir_in(uint16_t *ir_command)
@@ -37,7 +38,7 @@ void NavigatingMenu::ir_in(uint16_t *ir_command)
     case IR_6:
         this->program_index = 5;
         break;
-    case IR_0:
+    case IR_HASH:
     case IR_BACK:
         state_controller.set_state(new Idle(state_controller));
         break;

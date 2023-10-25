@@ -48,5 +48,6 @@ void Clock::display_time()
     display->update_display(3, high_minutes);
     display->update_display(4, low_hours);
     display->update_display(5, high_hours);
+    (total_seconds % 2 == 0) ? display->toggle_colon(CRGB::Red) : display->clear_colon();
     display->push_to_display();
 }

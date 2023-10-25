@@ -39,4 +39,5 @@ private:
     ProgramInterface &selected_program;
 
     std::stack<state> state_history;
+    uint8_t confirm_count = 0;
 };

@@ -15,7 +15,10 @@ public:
         {
             for (IRObserver *o : observers)
             {
-                o->on_notify_ir(ir_command);
+                if (o != nullptr)
+                {
+                    o->on_notify_ir(ir_command);
+                }
             }
         }
     }
