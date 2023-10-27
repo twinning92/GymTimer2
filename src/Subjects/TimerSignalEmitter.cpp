@@ -7,9 +7,8 @@ TimerSignalEmitter::TimerSignalEmitter(int8_t timer_number)
 {
     TickType_t x_ticks_to_wait = pdMS_TO_TICKS(150);
     hw_timer = timerBegin(timer_number, 80, true);
-    timerAlarmWrite(hw_timer, 100000, true);
+    timerAlarmWrite(hw_timer, 10000, true);
     timerAttachInterrupt(hw_timer, on_timer, true);
-    
 }
 
 TimerSignalEmitter *TimerSignalEmitter::get_instance(int8_t timer_number)
@@ -45,8 +44,7 @@ void IRAM_ATTR TimerSignalEmitter::on_timer()
     timer_divider++;
     buzzer.on_timer();
 
-    // One second increments:
-    if(timer_divider == 10)
+    if (timer_divider == 100)
     {
         instance->notify_observers();
         timer_divider = 0;

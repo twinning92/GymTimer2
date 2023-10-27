@@ -13,10 +13,10 @@ public:
         need_direction = false;
         program_runner.show_rounds = true;
 
-        reset_program();
+        set_preset_values();
     }
 
     void special_program_init() override;
     void second_in() override;
-    void reset_program() override;
+    void set_preset_values() override;
 };

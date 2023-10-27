@@ -23,7 +23,7 @@ void Interval::second_in()
             {
                 if (program_runner.total_work_time - program_runner.seconds_value <= 3 && program_runner.total_work_time - program_runner.seconds_value > 0)
                 {
-                    buzzer.start(1);
+                    buzzer.start(10*1);
                 }
                 if (program_runner.total_work_time - program_runner.seconds_value <= 0)
                 {
@@ -32,11 +32,11 @@ void Interval::second_in()
                     if (program_runner.total_rounds - program_runner.rounds_value <= 0)
                     {
                         program_runner.finished_program = true;
-                        buzzer.start(10);
+                        buzzer.start(10*10);
                     }
                     else
                     {
-                        buzzer.start(3);
+                        buzzer.start(10*3);
                     }
                 }
             }
@@ -44,14 +44,14 @@ void Interval::second_in()
             {
                 if (program_runner.total_rest_time - program_runner.seconds_value <= 3 && program_runner.total_rest_time - program_runner.seconds_value > 0)
                 {
-                    buzzer.start(1);
+                    buzzer.start(10*1);
                 }
                 if (program_runner.total_rest_time - program_runner.seconds_value <= 0)
                 {
                     program_runner.currently_working = true;
                     program_runner.seconds_value = 0;
                     program_runner.rounds_value++;
-                    buzzer.start(3);
+                    buzzer.start(10*3);
                 }
             }
         }
@@ -62,7 +62,7 @@ void Interval::second_in()
             {
                 if(program_runner.seconds_value <= 3 && program_runner.seconds_value > 0)
                 {
-                    buzzer.start(1);
+                    buzzer.start(10*1);
                 }
                 if (program_runner.seconds_value <= 0)
                 {
@@ -71,11 +71,11 @@ void Interval::second_in()
                     if (program_runner.rounds_value - 1 <= 0)
                     {
                         program_runner.finished_program = true;
-                        buzzer.start(10);
+                        buzzer.start(10*10);
                     }
                     else
                     {
-                        buzzer.start(3);
+                        buzzer.start(10*3);
                     }
                 }
             }
@@ -83,14 +83,14 @@ void Interval::second_in()
             {
                 if (program_runner.seconds_value <= 3 && program_runner.seconds_value >0)
                 {
-                    buzzer.start(1);
+                    buzzer.start(10*1);
                 }
                 if (program_runner.seconds_value<= 0)
                 {
                     program_runner.currently_working = true;
                     program_runner.seconds_value = program_runner.total_work_time;
                     program_runner.rounds_value--;
-                    buzzer.start(3);
+                    buzzer.start(10*3);
                 }
             }
         }

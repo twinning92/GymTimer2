@@ -13,7 +13,7 @@ const uint8_t ProgramInterface::get_program_index()
     return program_index;
 }
 
-void ProgramInterface::reset_program()
+void ProgramInterface::set_preset_values()
 {
 
     program_runner.currently_working = true;

@@ -61,6 +61,6 @@ void ProgramController::start()
 
 void ProgramController::stop()
 {
-    selected_program->reset_program();
+    selected_program->set_preset_values();
     timer->remove_observer(this);
 }

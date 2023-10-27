@@ -24,7 +24,7 @@ public:
 
     virtual void second_in() = 0;
     virtual void special_program_init() = 0;
-    virtual void reset_program();
+    virtual void set_preset_values();
     virtual ~ProgramInterface() = default;
     bool need_rounds = false;
     bool need_work = false;

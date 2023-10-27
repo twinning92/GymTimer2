@@ -25,7 +25,7 @@ void PrelimCountdown::ir_in(uint16_t *ir_command)
         // Pause
         is_paused = !is_paused;
         break;
-    case IR_0:
+    case IR_HASH:
         state_controller.set_state(new Idle(state_controller));
         break;
     }
@@ -39,11 +39,11 @@ void PrelimCountdown::on_notify_second()
         // go to one, so the 0 tick is the state transition.
         if (this->countdown_seconds <= 3 && this->countdown_seconds > 0)
         {
-            buzzer.start(1);
+            buzzer.start(10 * 1);
         }
         if (this->countdown_seconds <= 0)
         {
-            buzzer.start(3);
+            buzzer.start(10 * 3);
             state_controller.set_state(new Running(state_controller));
         }
     }

@@ -305,13 +305,13 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
         case IR_OK:
             program_controller->configure_selected_program(rounds_in, work_seconds_in, rest_seconds_in, count_up);
             state_controller.set_state(new PrelimCountdown(state_controller));
-        break;
-    case IR_BACK:
-        previous_state();
+            break;
+        case IR_BACK:
+            previous_state();
+            break;
+        }
         break;
     }
-    break;
-}
 }
 void ConfiguringProgram::previous_state()
 {

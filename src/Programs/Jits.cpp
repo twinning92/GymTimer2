@@ -16,27 +16,27 @@ void Jits::second_in()
         {
             if (program_runner.seconds_value <= 3 && program_runner.seconds_value > 0)
             {
-                buzzer.start(1);
+                buzzer.start(10*1);
             }
             if (program_runner.seconds_value <= 0)
             {
                 program_runner.seconds_value = program_runner.total_rest_time;
                 program_runner.currently_working = false;
-                buzzer.start(3);
+                buzzer.start(10*3);
             }
         }
         else
         {
             if (program_runner.seconds_value <= 3 && program_runner.seconds_value > 0)
             {
-                buzzer.start(1);
+                buzzer.start(10*1);
             }
             if (program_runner.seconds_value <= 0)
             {
                 program_runner.rounds_value++;
                 program_runner.seconds_value = program_runner.total_work_time;
                 program_runner.currently_working = true;
-                buzzer.start(3);
+                buzzer.start(10*3);
             }
         }
     }

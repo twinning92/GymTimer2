@@ -2,7 +2,6 @@
 
 Running::Running(StateController &state_controller_) : StateInterface(state_controller_), program_controller(ProgramController::get_instance()), prog_runner(program_controller->selected_program->program_runner)
 {
-    timer = TimerSignalEmitter::get_instance(0);
     display = Display::get_instance();
     display->clear_display();
     program_controller->start();
@@ -13,7 +12,6 @@ void Running::ir_in(uint16_t *ir_command)
     switch (*ir_command)
     {
     case IR_HASH:
-        // Just pause and wait for second press. This way the user can abandon by pressing ok
         prog_runner.paused = true;
         end_confirm_count++;
         if (end_confirm_count == 2)
@@ -21,7 +19,6 @@ void Running::ir_in(uint16_t *ir_command)
             program_controller->stop();
             prog_runner.finished_program = true;
         }
-
         break;
     case IR_OK:
         end_confirm_count = 0;
@@ -60,7 +57,7 @@ void Running::run_display()
             display->update_display(1, 0, CRGB::Red, true);
             display->update_display(0, 0, CRGB::Red, true);
             display->push_to_display();
-            buzzer.start(3);
+            buzzer.start(10 * 3);
         }
         state_controller.set_state(new Idle(state_controller));
         program_controller->stop();
