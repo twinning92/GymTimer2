@@ -13,7 +13,7 @@ void GPS::get_gps_time(uint8_t *hour, uint8_t *minute, uint8_t *second)
         {
             if (gps.time.isValid())
             {
-                *hour = gps.time.hour() + 8;
+                *hour = gps.time.hour() + 8 % 24;
                 *minute = gps.time.minute();
                 *second = gps.time.second();
             }
