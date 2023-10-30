@@ -13,6 +13,7 @@ void Clock::display_time()
     gps_sensor.get_gps_time(&hours, &minutes, &seconds);
     if (hours != 69)
     {
+        // Serial.println(hours);
         uint8_t low_seconds = seconds % 10;
         uint8_t high_seconds = seconds / 10 % 6;
 
@@ -37,7 +38,7 @@ void Clock::display_time()
         display->push_to_display();
 
         (low_seconds % 2 == 0) ? display->toggle_colon(CRGB::Red) : display->clear_colon();
-        Serial.printf("%d%d:%d%d:%d%d\n", high_hours, low_hours, high_minutes, low_minutes, high_seconds, low_seconds);
+        // Serial.printf("%d%d:%d%d:%d%d\n", high_hours, low_hours, high_minutes, low_minutes, high_seconds, low_seconds);
     }
     else
     {

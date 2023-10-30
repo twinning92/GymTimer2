@@ -22,6 +22,6 @@ private:
     ProgramController *program_controller;
     bool is_paused = false;
     TimerSignalEmitter *timer;
-    int8_t countdown_seconds = 2;
+    int8_t countdown_seconds = 10;
     Display *display;
 };
