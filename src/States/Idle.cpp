@@ -2,6 +2,15 @@
 
 Clock *Idle::clock69 = nullptr;
 
+Idle::~Idle()
+{
+    if (clock69 != nullptr)
+    {
+        delete clock69;
+        clock69 = nullptr;
+    }
+}
+
 void Idle::ir_in(uint16_t *ir_command)
 {
 

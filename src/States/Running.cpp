@@ -50,6 +50,7 @@ void Running::run_display()
         // Absolutely filthy. But I can't utilise millis(), as this is being called in the loop for an indefinite amount of time. Other blinking function also blinks forever, the difference there being that the program will move on and update
         //  the display. The intention of this snippet is to just blink the numbers for a few seconds after the program completes.
 
+        // buzzer.start(10 * 3);
         for (int i = 0; i < 370; i++)
         {
             display->update_display(3, 0, CRGB::Red, true);
@@ -57,7 +58,6 @@ void Running::run_display()
             display->update_display(1, 0, CRGB::Red, true);
             display->update_display(0, 0, CRGB::Red, true);
             display->push_to_display();
-            buzzer.start(10 * 3);
         }
         state_controller.set_state(new Idle(state_controller));
         program_controller->stop();

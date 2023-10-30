@@ -5,7 +5,7 @@
 class Clock
 {
 public:
-    Clock(Display *display_);
+    Clock();
     ~Clock();
     void display_time();
     void set_total_seconds(uint8_t hours, uint8_t minutes, uint8_t seconds);

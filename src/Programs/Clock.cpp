@@ -1,7 +1,8 @@
 #include "Clock.h"
 
-Clock::Clock(Display *display_) : display(display_)
+Clock::Clock() 
 {
+    display = Display::get_instance();
 }
 
 Clock::~Clock()

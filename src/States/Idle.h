@@ -19,11 +19,10 @@ public:
         this->display = Display::get_instance();
         if (this->clock69 == nullptr)
         {
-            this->clock69 = new Clock(display);
+            this->clock69 = new Clock();
         }
-        // Change to query RTC time as new structure won't implement clock keeping time in the background. Could be achieved by moving clock into main class?
-        // clock69->set_total_seconds(10, 50, 10);
     };
+    ~Idle();
     void ir_in(uint16_t *ir_command) override;
     void run_display() override;
 
