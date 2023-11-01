@@ -10,6 +10,7 @@ class ConfiguringProgram : public StateInterface
 {
 public:
     ConfiguringProgram(StateController &state_controller_, ProgramInterface &selected_program_);
+    ConfiguringProgram(StateController &state_controller_, ProgramInterface &selected_program_, uint8_t number_pressed);
     void ir_in(uint16_t *ir_command) override;
     void previous_state();
     void run_display() override;

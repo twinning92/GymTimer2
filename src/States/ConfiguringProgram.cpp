@@ -9,6 +9,20 @@ ConfiguringProgram::ConfiguringProgram(StateController &state_controller_, Progr
     display->clear_colon();
 }
 
+// This constructor handles transition from Idle phase triggered from a number input, rather than a directional.
+ConfiguringProgram::ConfiguringProgram(StateController &state_controller_, ProgramInterface &selected_program_, uint8_t number_pressed) : StateInterface(state_controller_), selected_program(selected_program_)
+{
+    this->program_controller = ProgramController::get_instance();
+    this->display = Display::get_instance();
+
+    rounds_in = 1;
+    config_state = state::work;
+    
+    display->clear_display();
+    display->clear_colon();
+    work_mm_ss_in[0] = number_pressed;
+}
+
 void ConfiguringProgram::ir_in(uint16_t *ir_command)
 {
     switch (config_state)

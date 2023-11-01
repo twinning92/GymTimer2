@@ -16,6 +16,9 @@ class Idle : public StateInterface
 public:
     Idle(StateController &state_controller_) : StateInterface(state_controller_)
     {
+        this->program_controller = ProgramController::get_instance();
+        // Idle will set the selected program to DownRound. This way I can just pass selected program into Configure Program if the user enters a number during Idle Phase.
+        this->program_controller->set_selected_program(1);
         this->display = Display::get_instance();
         if (this->clock69 == nullptr)
         {
@@ -28,5 +31,6 @@ public:
 
 private:
     Display *display;
+    ProgramController *program_controller;
     static Clock *clock69;
 };
