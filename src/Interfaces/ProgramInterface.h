@@ -43,7 +43,7 @@ public:
         int16_t total_work_time = 0;
         int16_t total_rest_time = 0;
 
-        int8_t rounds_value = 0;   // Rounds value to actually display
-        int16_t seconds_value = 0; // Use seconds value to increment and calculate off. This is what is sent to the display.
+        volatile int8_t rounds_value = 0;   // Rounds value to actually display
+        volatile int16_t seconds_value = 0; // Use seconds value to increment and calculate off. This is what is sent to the display.
     } program_runner;
 };

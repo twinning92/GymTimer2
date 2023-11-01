@@ -4,7 +4,6 @@ ConfiguringProgram::ConfiguringProgram(StateController &state_controller_, Progr
 {
     this->display = Display::get_instance();
     this->program_controller = ProgramController::get_instance();
-    // Init the rounds display to start at 1 instead of 0.
     display->clear_display();
     display->clear_colon();
 }
@@ -17,7 +16,7 @@ ConfiguringProgram::ConfiguringProgram(StateController &state_controller_, Progr
 
     rounds_in = 1;
     config_state = state::work;
-    
+
     display->clear_display();
     display->clear_colon();
     work_mm_ss_in[0] = number_pressed;
@@ -344,7 +343,6 @@ void ConfiguringProgram::previous_state()
 
 void ConfiguringProgram::run_display()
 {
-    // Double switch between ir_in and run_display is a consequence of having the ir signal piped in. Can't have all the logic in ir_in otherwise nothing will be displayed until ir_signal received.
     switch (config_state)
     {
     case state::rounds:
