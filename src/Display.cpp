@@ -53,10 +53,6 @@ Display::Display() : digits{Digit(leds, 0 * LEDS_PER_DIGIT), Digit(leds, 1 * LED
 {
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
     FastLED.setBrightness(255);
-    leds[NUM_LEDS - 4] = CRGB::Red;
-    leds[NUM_LEDS - 3] = CRGB::Red;
-    leds[NUM_LEDS - 2] = CRGB::Red;
-    leds[NUM_LEDS - 1] = CRGB::Red;
 }
 
 void Display::write_string(String string, uint8_t length, CRGB colour, bool blink)
