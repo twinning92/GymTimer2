@@ -44,7 +44,14 @@ void Idle::ir_in(uint16_t *ir_command)
         state_controller.set_state(new ConfiguringProgram(state_controller, *program_controller->selected_program, 6));
         break;
     case IR_7:
-        state_controller.set_state(new ConfiguringProgram(state_controller, *program_controller->selected_program, 7));
+        if (state == idle_state::gym)
+        {
+            display->scroll_string("taylor is a sick cunt ", 22, colour);
+        }
+        else
+        {
+            state_controller.set_state(new ConfiguringProgram(state_controller, *program_controller->selected_program, 7));
+        }
         break;
     case IR_8:
         state_controller.set_state(new ConfiguringProgram(state_controller, *program_controller->selected_program, 8));
