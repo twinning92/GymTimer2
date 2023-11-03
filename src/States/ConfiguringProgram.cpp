@@ -1,5 +1,10 @@
 #include "ConfiguringProgram.h"
 
+// TODO: Upon initialization/construction of this state I should actually be parsing the selected_program variables to obtain a local state representation
+// of values. This would enable going back from prelim countdown to populate the currently entered values, AND also enable the pre configured programs to 
+// have their values access correctly by this state.
+
+
 ConfiguringProgram::ConfiguringProgram(StateController &state_controller_, ProgramInterface &selected_program_) : StateInterface(state_controller_), selected_program(selected_program_)
 {
     this->display = Display::get_instance();
