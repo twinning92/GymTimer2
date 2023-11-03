@@ -33,7 +33,6 @@ void Running::run_display()
     {
         if (prog_runner.show_rounds)
         {
-            // Don't display the leading 0 in rounds. Additionally, toggle between green and yellow for round colour depending on whether resting or working to provide contrast
             display->update_display(5, prog_runner.rounds_value / 10, (prog_runner.rounds_value / 10 != 0) ? ((prog_runner.currently_working) ? CRGB::Green : CRGB::Red) : CRGB::Black);
             display->update_display(4, prog_runner.rounds_value % 10, (prog_runner.currently_working) ? CRGB::Green : CRGB::Red);
         }

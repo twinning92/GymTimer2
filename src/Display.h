@@ -92,5 +92,5 @@ private:
     static Display *instance;
     Digit digits[6];
 
-    CRGB leds[NUM_LEDS];
+    CRGB leds[NUM_LEDS]{CRGB::Red};
 };

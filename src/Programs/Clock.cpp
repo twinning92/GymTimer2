@@ -43,7 +43,7 @@ void Clock::display_time(CRGB colour)
     }
     else
     {
-        display->write_string(" gps ", 5, CRGB::Red, true);
+        display->write_string(" gps  ", 6, CRGB::Red, true);
         display->push_to_display();
     }
 }

@@ -36,7 +36,6 @@ void PrelimCountdown::on_notify_second()
     if (!is_paused)
     {
         this->countdown_seconds--;
-        // go to one, so the 0 tick is the state transition.
         if (this->countdown_seconds <= 3 && this->countdown_seconds > 0)
         {
             buzzer.start(10 * 1);
@@ -45,6 +44,7 @@ void PrelimCountdown::on_notify_second()
         {
             buzzer.start(10 * 3);
             state_controller.set_state(new Running(state_controller));
+            timer->remove_observer(this);
         }
     }
 }
