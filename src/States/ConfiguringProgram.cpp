@@ -89,7 +89,7 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             display->clear_display();
             selected_digit_index = 0;
             break;
-        case IR_BACK:
+        case IR_STAR:
             work_mm_ss_in[0] = work_mm_ss_in[1];
             work_mm_ss_in[1] = 0;
             break;
@@ -175,7 +175,7 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             work_mm_ss_in[1] = work_mm_ss_in[0];
             work_mm_ss_in[0] = 0;
             break;
-        case IR_BACK:
+        case IR_STAR:
             work_mm_ss_in[0] = work_mm_ss_in[1];
             work_mm_ss_in[1] = work_mm_ss_in[2];
             work_mm_ss_in[2] = work_mm_ss_in[3];
@@ -274,7 +274,7 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             rest_mm_ss_in[1] = rest_mm_ss_in[0];
             rest_mm_ss_in[0] = 0;
             break;
-        case IR_BACK:
+        case IR_STAR:
             rest_mm_ss_in[0] = rest_mm_ss_in[1];
             rest_mm_ss_in[1] = rest_mm_ss_in[2];
             rest_mm_ss_in[2] = rest_mm_ss_in[3];
@@ -320,7 +320,7 @@ void ConfiguringProgram::ir_in(uint16_t *ir_command)
             program_controller->configure_selected_program(rounds_in, work_seconds_in, rest_seconds_in, count_up);
             state_controller.set_state(new PrelimCountdown(state_controller));
             break;
-        case IR_BACK:
+        case IR_STAR:
             previous_state();
             break;
         }

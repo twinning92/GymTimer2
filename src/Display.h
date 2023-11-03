@@ -31,9 +31,9 @@ public:
     void update_digit(uint8_t digit_to_render, CRGB colour);
     void show_digit(bool on);
 
+    uint8_t current_value;
 private:
     Segment segments[7];
-    uint8_t current_value;
     uint16_t digit_led_offset;
 
     const uint8_t digit_segment_mappings[50] = {
@@ -75,6 +75,7 @@ class Display
 public:
     static Display *get_instance();
     void push_to_display();
+    void scroll_string(String scroll, uint8_t length, CRGB colour);
     void write_string(String string, uint8_t length, CRGB colour, bool blink = false);
 
     void update_display(uint8_t position, uint8_t number_to_render, CRGB colour = CRGB::Red);
@@ -83,6 +84,8 @@ public:
     void clear_colon();
     void clear_digit(uint8_t position);
     void clear_display();
+
+    uint8_t get_char_index(char character);
 
 private:
     Display();

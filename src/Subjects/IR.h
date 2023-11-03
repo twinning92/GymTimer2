@@ -11,7 +11,7 @@
 #define IR_LEFT 0x8
 #define IR_RIGHT 0x5a
 #define IR_OK 0x1c
-#define IR_BACK 0x16
+#define IR_STAR 0x16
 #define IR_HASH 0xD
 #define IR_1 0x45
 #define IR_2 0x46

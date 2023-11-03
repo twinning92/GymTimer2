@@ -9,7 +9,7 @@ Clock::~Clock()
 {
 }
 
-void Clock::display_time()
+void Clock::display_time(CRGB colour)
 {
     gps_sensor.get_gps_time(&hours, &minutes, &seconds);
     if (hours != 69)
@@ -30,15 +30,15 @@ void Clock::display_time()
         // display->update_display(3, high_minutes, (CRGB)colours[colour_index]);
         // display->update_display(4, low_hours, (CRGB)colours[colour_index]);
         // display->update_display(5, high_hours, (CRGB)colours[colour_index]);
-        display->update_display(0, low_seconds);
-        display->update_display(1, high_seconds);
-        display->update_display(2, low_minutes);
-        display->update_display(3, high_minutes);
-        display->update_display(4, low_hours);
-        display->update_display(5, high_hours);
+        display->update_display(0, low_seconds, colour);
+        display->update_display(1, high_seconds, colour);
+        display->update_display(2, low_minutes, colour);
+        display->update_display(3, high_minutes, colour);
+        display->update_display(4, low_hours, colour);
+        display->update_display(5, high_hours, colour);
         display->push_to_display();
 
-        (low_seconds % 2 == 0) ? display->toggle_colon(CRGB::Red) : display->clear_colon();
+        (low_seconds % 2 == 0) ? display->toggle_colon(colour) : display->clear_colon();
         // Serial.printf("%d%d:%d%d:%d%d\n", high_hours, low_hours, high_minutes, low_minutes, high_seconds, low_seconds);
     }
     else

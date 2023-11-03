@@ -232,8 +232,102 @@ void Display::push_to_display()
     FastLED.show();
 }
 
+void Display::scroll_string(String scroll, uint8_t length, CRGB colour)
+{
+    static uint16_t ticks = 0;
+    static uint8_t string_index = 0;
+    ticks++;
+    if (ticks == 400)
+    {
+        ticks = 0;
+        digits[5].update_digit(digits[4].current_value, colour);
+        digits[4].update_digit(digits[3].current_value, colour);
+        digits[3].update_digit(digits[2].current_value, colour);
+        digits[2].update_digit(digits[1].current_value, colour);
+        digits[1].update_digit(digits[0].current_value, colour);
+
+        digits[0].update_digit(get_char_index(scroll.charAt((string_index++) % length)), colour);
+    }
+}
+
 void Display::clear_display()
 {
     write_string("      ", 6, CRGB::Black);
     push_to_display();
+}
+
+uint8_t Display::get_char_index(char character)
+{
+    switch (character)
+    {
+    // Basically need to reverse the display, string comes in left-right but digit mappings are right-left
+    case 'a':
+        return 10;
+
+    case 'b':
+        return 11;
+
+    case 'c':
+        return 12;
+
+    case 'd':
+        return 13;
+
+    case 'e':
+        return 14;
+
+    case 'n':
+        return 15;
+
+    case 'o':
+        return 16;
+
+    case 'r':
+        return 17;
+
+    case 't':
+        return 18;
+
+    case 'i':
+        return 19;
+
+    case 'f':
+        return 20;
+
+    case 'u':
+        return 21;
+
+    case 'p':
+        return 22;
+
+    case 'j':
+        return 23;
+
+    case 's':
+        return 24;
+
+    case ' ':
+        return 25;
+
+    case '_':
+        return 26;
+
+    case '-':
+        return 27;
+
+    case 'y':
+        return 28;
+
+    case '5':
+        return 5;
+
+    case '7':
+        return 7;
+
+    case 'g':
+        return 29;
+
+    default:
+        return 25; // space
+    }
 }

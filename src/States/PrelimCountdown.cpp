@@ -18,14 +18,14 @@ void PrelimCountdown::ir_in(uint16_t *ir_command)
 {
     switch (*ir_command)
     {
-    case IR_BACK:
+    case IR_STAR:
         state_controller.set_state(new ConfiguringProgram(state_controller, *program_controller->selected_program));
         break;
     case IR_OK:
-        // Pause
         is_paused = !is_paused;
         break;
     case IR_HASH:
+        program_controller->selected_program->set_preset_values();
         state_controller.set_state(new Idle(state_controller));
         break;
     }

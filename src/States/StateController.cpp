@@ -16,6 +16,7 @@ void StateController::set_state(StateInterface *new_state)
     if (current_state != nullptr)
     {
         delete current_state;
+        current_state = nullptr;
     }
     current_state = new_state;
 }
