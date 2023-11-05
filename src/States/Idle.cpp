@@ -66,12 +66,18 @@ void Idle::ir_in(uint16_t *ir_command)
         switch (state)
         {
         case idle_state::clock:
+            display->clear_display();
+            Serial.println("switching to state: buzz");
             state = idle_state::buzz;
             break;
         case idle_state::buzz:
+            display->clear_display();
+            Serial.println("switching to state: gym");
             state = idle_state::gym;
             break;
         case idle_state::gym:
+            display->clear_display();
+            Serial.println("switching to state: clock");
             state = idle_state::clock;
         }
         break;
@@ -95,13 +101,19 @@ void Idle::run_display()
     switch (state)
     {
     case idle_state::buzz:
+        Serial.println("run_display() case buzz");
         display->write_string(buzz_words[buzz_word_index], buzz_words[buzz_word_index].length() - 1, colour);
         break;
     case idle_state::gym:
+        Serial.println("run_display() case gym");
         display->scroll_string(iron, iron_length, colour);
         break;
     case idle_state::clock:
+        Serial.println("run_display() case clock");
+        clock69->display_time(colour);
+        break;
     default:
+        Serial.println("run_display() case default");
         clock69->display_time(colour);
         break;
     }

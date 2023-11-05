@@ -41,13 +41,15 @@ private:
     String iron = "iron octopus ";
     uint8_t iron_length = 13;
 
-    std::array<CRGB, 8> colours = {CRGB::Red, CRGB::Blue, CRGB::Green, CRGB::Yellow, CRGB::White, CRGB::Purple, CRGB::Pink, CRGB::Cyan};
+    std::array<CRGB, 8> colours = {CRGB::Red, CRGB::Blue, CRGB::Green, CRGB::Yellow, CRGB::Purple, CRGB::Pink, CRGB::Cyan};
     static uint8_t colours_index;
     CRGB colour = colours[colours_index];
 
-    enum idle_state {
+    enum class idle_state
+    {
         clock,
         buzz,
         gym
-    } state = idle_state::clock;
+    };
+    idle_state state = idle_state::clock;
 };
