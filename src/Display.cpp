@@ -2,6 +2,9 @@
 
 Display *Display::instance = nullptr;
 
+uint16_t Display::ticks = 0;
+uint8_t Display::string_index = 0;
+
 Segment::Segment(CRGB *leds, char segment_designator, uint8_t num_leds_per_segment, uint16_t segment_led_offset, uint8_t segment_led_mask)
 {
     this->leds = leds;
@@ -149,13 +152,32 @@ void Display::write_string(String string, uint8_t length, CRGB colour, bool blin
         case 'g':
             update_display(5 - i, 29, colour, blink);
             break;
+        case 'h':
+            update_display(5 - i, 30, colour, blink);
+            break;
+        case 'k':
+            update_display(5 - i, 31, colour, blink);
+            break;
+        case 'q':
+            update_display(5 - i, 32, colour, blink);
+            break;
+        case 'v':
+            update_display(5 - i, 33, colour, blink);
+            break;
+        case 'x':
+            update_display(5 - i, 34, colour, blink);
+            break;
+        case 'z':
+            update_display(5 - i, 35, colour, blink);
+            break;
+        case '0':
+            update_display(5 - i, 0, colour, blink);
+            break;
         default:
             clear_digit(5 - i);
-            // Serial.printf("default: clearing digit. unable to print '%c'\n", i, string.charAt(i));
             break;
         }
     }
-    // Serial.printf("length: %d\n", length);
 }
 
 void Display::update_display(uint8_t position, uint8_t number_to_render, CRGB colour)
@@ -230,10 +252,9 @@ void Display::push_to_display()
 
 void Display::scroll_string(String scroll, uint8_t length, CRGB colour)
 {
-    static uint16_t ticks = 0;
-    static uint8_t string_index = 0;
+    scroll.toLowerCase();
     ticks++;
-    if (ticks == 400)
+    if (ticks == 25)
     {
         ticks = 0;
         digits[5].update_digit(digits[4].current_value, colour);
@@ -252,6 +273,12 @@ void Display::clear_display()
     push_to_display();
 }
 
+void Display::reset_scroll()
+{
+    this->ticks = 0;
+    this->string_index = 0;
+}
+
 uint8_t Display::get_char_index(char character)
 {
     switch (character)
@@ -259,70 +286,62 @@ uint8_t Display::get_char_index(char character)
     // Basically need to reverse the display, string comes in left-right but digit mappings are right-left
     case 'a':
         return 10;
-
     case 'b':
         return 11;
-
     case 'c':
         return 12;
-
     case 'd':
         return 13;
-
     case 'e':
         return 14;
-
     case 'n':
         return 15;
-
     case 'o':
         return 16;
-
     case 'r':
         return 17;
-
     case 't':
         return 18;
-
     case 'i':
         return 19;
-
     case 'f':
         return 20;
-
     case 'u':
         return 21;
-
     case 'p':
         return 22;
-
     case 'j':
         return 23;
-
     case 's':
         return 24;
-
     case ' ':
         return 25;
-
     case '_':
         return 26;
-
     case '-':
         return 27;
-
     case 'y':
         return 28;
-
     case '5':
         return 5;
-
     case '7':
         return 7;
-
     case 'g':
         return 29;
-
+    case 'h':
+        return 30;
+    case 'k':
+        return 31;
+    case 'q':
+        return 32;
+    case 'v':
+        return 33; // pretty bad v
+    case 'x':
+        return 34;
+    case 'z':
+        return 35;
+    case '0':
+        return 0;
     default:
         return 25; // space
     }

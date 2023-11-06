@@ -35,21 +35,27 @@ private:
     static Clock *clock69;
 
     bool display_buzz_words = false;
-    std::array<String, 5> buzz_words = {"cunt", "fuck", "shit", "sick", "dardy"};
+    std::array<String, 35> buzz_words = {"cunt", "fuck", "shit", "sick", "dardy", "cunty", "pussy", "good", "great", "congrats ", "personal best ", "again", "pity party ",
+                                        "try harder ", "dog cunt ", "good shit ", "you can do it ", "I believe in you ", "great ass ", "fuckin hot shit dog cunt ", 
+                                        "lets get that heart racing ", "find your fire ", "youre not tired ", "this isnt a tea party ", 
+                                        "quit your crying this isnt daycare ", "feel the burn ", "you cant fake fit lift or quit ", 
+                                        "do better ", "Ive seen toddlers push harder ", "cry on the inside like everyone else ", 
+                                        "eat a bag of dicks ", "you go girl ", "boss babes dont quit ", "slay queen ", "slay the day "};
     uint8_t buzz_word_index = 0;
 
-    String iron = "iron octopus ";
-    uint8_t iron_length = 13;
+    std::array<String,2> iron = {"iron 0ctopus ", "iron 0ctopus school of physical culture "};
+    uint8_t gym_name_index = 0;
+    String easter_egg = "taylor is a sick cunt ";
 
-    std::array<CRGB, 8> colours = {CRGB::Red, CRGB::Blue, CRGB::Green, CRGB::Yellow, CRGB::Purple, CRGB::Pink, CRGB::Cyan};
+    std::array<CRGB, 3> colours = {CRGB::Red, CRGB::Blue, CRGB::Green};
     static uint8_t colours_index;
     CRGB colour = colours[colours_index];
 
     enum class idle_state
     {
         clock,
-        buzz,
-        gym
+        buzz_words,
+        gym_name
     };
     idle_state state = idle_state::clock;
 };

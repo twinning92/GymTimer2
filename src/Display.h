@@ -32,6 +32,7 @@ public:
     void show_digit(bool on);
 
     uint8_t current_value;
+
 private:
     Segment segments[7];
     uint16_t digit_led_offset;
@@ -67,6 +68,12 @@ private:
         0b00000001, // "-" 27
         0b01101011, // "y" 28
         0b01101111, // "g" 29
+        0b01011001, // "h" 30
+        0b01011011, // "K" 31
+        0b01001111, // "q" 32
+        0b01110000, // "v" 33 pretty bad v
+        0b01011011, // "x" 34
+        0b00110111, // "z" 35
     };
 };
 
@@ -84,6 +91,7 @@ public:
     void clear_colon();
     void clear_digit(uint8_t position);
     void clear_display();
+    void reset_scroll();
 
     uint8_t get_char_index(char character);
 
@@ -93,4 +101,7 @@ private:
     Digit digits[6];
 
     CRGB leds[NUM_LEDS]{CRGB::Red};
+
+    static uint16_t ticks;
+    static uint8_t string_index;
 };

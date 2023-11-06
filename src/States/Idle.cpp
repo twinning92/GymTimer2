@@ -44,9 +44,11 @@ void Idle::ir_in(uint16_t *ir_command)
         state_controller.set_state(new ConfiguringProgram(state_controller, *program_controller->selected_program, 6));
         break;
     case IR_7:
-        if (state == idle_state::gym)
+        if (state == idle_state::gym_name)
         {
-            display->scroll_string("taylor is a sick cunt ", 22, colour);
+            display->reset_scroll();
+            display->scroll_string(easter_egg, easter_egg.length(), colour);
+            display->push_to_display();
         }
         else
         {
@@ -67,17 +69,16 @@ void Idle::ir_in(uint16_t *ir_command)
         {
         case idle_state::clock:
             display->clear_display();
-            Serial.println("switching to state: buzz");
-            state = idle_state::buzz;
+            state = idle_state::buzz_words;
             break;
-        case idle_state::buzz:
+        case idle_state::buzz_words:
+            display->reset_scroll();
             display->clear_display();
-            Serial.println("switching to state: gym");
-            state = idle_state::gym;
+            state = idle_state::gym_name;
             break;
-        case idle_state::gym:
+        case idle_state::gym_name:
+            display->reset_scroll();
             display->clear_display();
-            Serial.println("switching to state: clock");
             state = idle_state::clock;
         }
         break;
@@ -86,9 +87,18 @@ void Idle::ir_in(uint16_t *ir_command)
         colour = colours[colours_index];
         break;
     case IR_STAR:
-        if (state == idle_state::buzz)
+        if (state == idle_state::buzz_words)
         {
+            display->clear_display();
+            display->reset_scroll();
+
             buzz_word_index = (buzz_word_index + 1) % buzz_words.size();
+        }
+        else if (state == idle_state::gym_name)
+        {
+            display->clear_display();
+            display->reset_scroll();
+            gym_name_index = (gym_name_index + 1) % iron.size();
         }
         break;
     default:
@@ -100,20 +110,26 @@ void Idle::run_display()
 {
     switch (state)
     {
-    case idle_state::buzz:
-        Serial.println("run_display() case buzz");
-        display->write_string(buzz_words[buzz_word_index], buzz_words[buzz_word_index].length() - 1, colour);
+    case idle_state::buzz_words:
+        if (buzz_words[buzz_word_index].length() <= 6)
+        {
+            display->write_string(buzz_words[buzz_word_index], buzz_words[buzz_word_index].length(), colour);
+        }
+        else
+        {
+            display->scroll_string(buzz_words[buzz_word_index], buzz_words[buzz_word_index].length(), colour);
+        }
+        display->push_to_display();
+
         break;
-    case idle_state::gym:
-        Serial.println("run_display() case gym");
-        display->scroll_string(iron, iron_length, colour);
+    case idle_state::gym_name:
+        display->scroll_string(iron[gym_name_index], iron[gym_name_index].length(), colour);
+        display->push_to_display();
         break;
     case idle_state::clock:
-        Serial.println("run_display() case clock");
         clock69->display_time(colour);
         break;
     default:
-        Serial.println("run_display() case default");
         clock69->display_time(colour);
         break;
     }
