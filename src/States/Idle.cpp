@@ -72,11 +72,13 @@ void Idle::ir_in(uint16_t *ir_command)
             state = idle_state::buzz_words;
             break;
         case idle_state::buzz_words:
+            display->clear_colon();
             display->reset_scroll();
             display->clear_display();
             state = idle_state::gym_name;
             break;
         case idle_state::gym_name:
+            display->clear_colon();
             display->reset_scroll();
             display->clear_display();
             state = idle_state::clock;
