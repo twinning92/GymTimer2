@@ -104,6 +104,7 @@ void Display::write_string(String string, uint8_t length, CRGB colour, bool blin
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
         case 'i':
+        case 'l':
             update_display(5 - i, 19, colour, blink);
             // Serial.printf("%d: %c\n", i, string.charAt(i));
             break;
@@ -252,6 +253,7 @@ void Display::push_to_display()
 
 void Display::scroll_string(String scroll, uint8_t length, CRGB colour)
 {
+    // TODO: Start scroll words fully displayed on the screen.
     scroll.toLowerCase();
     ticks++;
     if (ticks == 25)
@@ -303,6 +305,7 @@ uint8_t Display::get_char_index(char character)
     case 't':
         return 18;
     case 'i':
+    case 'l':
         return 19;
     case 'f':
         return 20;
