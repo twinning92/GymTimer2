@@ -37,8 +37,8 @@ void Running::run_display()
             display->update_display(4, prog_runner.rounds_value % 10, (prog_runner.currently_working) ? CRGB::Green : CRGB::Red);
         }
 
-        display->update_display(3, prog_runner.seconds_value / 600, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
-        display->update_display(2, prog_runner.seconds_value / 60, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
+        display->update_display(3, prog_runner.seconds_value / 600 % 10, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
+        display->update_display(2, prog_runner.seconds_value / 60 % 10, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
         display->update_display(1, prog_runner.seconds_value / 10 % 6, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
         display->update_display(0, prog_runner.seconds_value % 10, (prog_runner.currently_working) ? CRGB::Red : CRGB::Green, (prog_runner.paused) ? true : false);
         (prog_runner.seconds_value % 2 == 0) ? display->toggle_colon((prog_runner.currently_working) ? CRGB::Red : CRGB::Green) : display->clear_colon();
