@@ -9,6 +9,25 @@ ConfiguringProgram::ConfiguringProgram(StateController &state_controller_, Progr
 {
     this->display = Display::get_instance();
     this->program_controller = ProgramController::get_instance();
+    if (selected_program.need_rounds)
+    {
+        this->rounds_in_rr[0] = selected_program.program_runner.total_rounds % 10;
+        this->rounds_in_rr[1] = selected_program.program_runner.total_rounds / 10;   
+    }
+    if (selected_program.need_work)
+    {
+        this->work_mm_ss_in[0] = selected_program.program_runner.total_work_time % 10 ;
+        this->work_mm_ss_in[1] = (selected_program.program_runner.total_work_time / 10) % 6 ;
+        this->work_mm_ss_in[2] = (selected_program.program_runner.total_work_time / 60) % 10;
+        this->work_mm_ss_in[3] = (selected_program.program_runner.total_work_time / 600) % 10;
+    }
+    if (selected_program.need_rest)
+    {
+        this->rest_mm_ss_in[0] = selected_program.program_runner.total_rest_time % 10;
+        this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time / 10) % 6;
+        this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time / 60) % 10;
+        this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time /600) % 10;
+    }
     display->clear_display();
     display->clear_colon();
 }
@@ -398,24 +417,10 @@ void ConfiguringProgram::run_display()
         display->push_to_display();
         break;
     case state::finished_configuring:
-        // Can't display total seconds consistently in hold screen because some programs have their time set in the program initiatlization
-        // because they are hard coded, and some programs rely on the input from this state. I could either call configure program first, in which case
-        // the display is shown as 0seconds because this state hasn't been used, or I reference this states value for work seconds, in which case the hard
-        // coded programs display 0 seconds, because this state isn't used.
-        if (selected_program.program_runner.total_work_time != 0)
-        {
-            display->update_display(3, selected_program.program_runner.total_work_time / 600, CRGB::Red);
-            display->update_display(2, selected_program.program_runner.total_work_time / 60 % 10, CRGB::Red);
-            display->update_display(1, selected_program.program_runner.total_work_time / 10 % 6, CRGB::Red);
-            display->update_display(0, selected_program.program_runner.total_work_time % 10, CRGB::Red);
-        }
-        else
-        {
-            display->update_display(3, work_seconds_in / 600, CRGB::Red);
-            display->update_display(2, work_seconds_in / 60 % 10, CRGB::Red);
-            display->update_display(1, work_seconds_in / 10 % 6, CRGB::Red);
-            display->update_display(0, work_seconds_in % 10, CRGB::Red);
-        }
+        display->update_display(0, work_mm_ss_in[0], CRGB::Red);
+        display->update_display(1, work_mm_ss_in[1], CRGB::Red);
+        display->update_display(2, work_mm_ss_in[2], CRGB::Red);
+        display->update_display(3, work_mm_ss_in[3], CRGB::Red);
         display->push_to_display();
         break;
     }
