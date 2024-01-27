@@ -16,7 +16,6 @@ void Running::ir_in(uint16_t *ir_command)
         end_confirm_count++;
         if (end_confirm_count == 2)
         {
-            program_controller->stop();
             prog_runner.finished_program = true;
         }
         break;
@@ -58,7 +57,7 @@ void Running::run_display()
             display->update_display(0, 0, CRGB::Red, true);
             display->push_to_display();
         }
-        state_controller.set_state(new Idle(state_controller));
         program_controller->stop();
+        state_controller.set_state(new Idle(state_controller));
     }
 }
