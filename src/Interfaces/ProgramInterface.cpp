@@ -15,7 +15,6 @@ const uint8_t ProgramInterface::get_program_index()
 
 void ProgramInterface::set_preset_values()
 {
-
     program_runner.currently_working = true;
     program_runner.finished_program = false;
     program_runner.paused = false;
