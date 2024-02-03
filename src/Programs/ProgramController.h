@@ -10,8 +10,9 @@
 #include "Programs/DownRound.h"
 #include "Programs/Tabata.h"
 #include "Programs/Interval.h"
+#include "Programs/Qnd.h"
 
-#define NUM_PROGRAMS 6
+#define NUM_PROGRAMS 7
 
 class ProgramController : public TimeObserver
 {

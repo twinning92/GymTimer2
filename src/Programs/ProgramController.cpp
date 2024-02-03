@@ -11,6 +11,7 @@ ProgramController::ProgramController()
     program_array[3] = new Jits5(3);
     program_array[4] = new Jits7(4);
     program_array[5] = new Tabata(5);
+    program_array[6] = new Qnd(6);
     this->selected_program = nullptr;
     timer = TimerSignalEmitter::get_instance();
 }

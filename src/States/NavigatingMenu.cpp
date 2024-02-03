@@ -38,6 +38,9 @@ void NavigatingMenu::ir_in(uint16_t *ir_command)
     case IR_6:
         this->program_index = 5;
         break;
+    case IR_7:
+        this->program_index = 7;
+        break;
     case IR_HASH:
     case IR_STAR:
         state_controller.set_state(new Idle(state_controller));

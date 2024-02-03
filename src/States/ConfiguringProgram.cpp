@@ -1,33 +1,30 @@
 #include "ConfiguringProgram.h"
 
 // TODO: Upon initialization/construction of this state I should actually be parsing the selected_program variables to obtain a local state representation
-// of values. This would enable going back from prelim countdown to populate the currently entered values, AND also enable the pre configured programs to 
+// of values. This would enable going back from prelim countdown to populate the currently entered values, AND also enable the pre configured programs to
 // have their values access correctly by this state.
-
 
 ConfiguringProgram::ConfiguringProgram(StateController &state_controller_, ProgramInterface &selected_program_) : StateInterface(state_controller_), selected_program(selected_program_)
 {
     this->display = Display::get_instance();
     this->program_controller = ProgramController::get_instance();
-    if (selected_program.need_rounds)
-    {
-        this->rounds_in_rr[0] = selected_program.program_runner.total_rounds % 10;
-        this->rounds_in_rr[1] = selected_program.program_runner.total_rounds / 10;   
-    }
-    if (selected_program.need_work)
-    {
-        this->work_mm_ss_in[0] = selected_program.program_runner.total_work_time % 10 ;
-        this->work_mm_ss_in[1] = (selected_program.program_runner.total_work_time / 10) % 6 ;
-        this->work_mm_ss_in[2] = (selected_program.program_runner.total_work_time / 60) % 10;
-        this->work_mm_ss_in[3] = (selected_program.program_runner.total_work_time / 600) % 10;
-    }
-    if (selected_program.need_rest)
-    {
-        this->rest_mm_ss_in[0] = selected_program.program_runner.total_rest_time % 10;
-        this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time / 10) % 6;
-        this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time / 60) % 10;
-        this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time /600) % 10;
-    }
+
+    // dont think I need to check the need_xxx because in the case of jits/qnd where the time is constructed, these will be false so they wont be set.
+    // but will need to make sure these are 0 in the case that they will be true, so we don't have invalid data on display
+
+    this->rounds_in_rr[0] = selected_program.program_runner.total_rounds % 10;
+    this->rounds_in_rr[1] = selected_program.program_runner.total_rounds / 10;
+
+    this->work_mm_ss_in[0] = selected_program.program_runner.total_work_time % 10;
+    this->work_mm_ss_in[1] = (selected_program.program_runner.total_work_time / 10) % 6;
+    this->work_mm_ss_in[2] = (selected_program.program_runner.total_work_time / 60) % 10;
+    this->work_mm_ss_in[3] = (selected_program.program_runner.total_work_time / 600) % 10;
+
+    this->rest_mm_ss_in[0] = selected_program.program_runner.total_rest_time % 10;
+    this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time / 10) % 6;
+    this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time / 60) % 10;
+    this->rest_mm_ss_in[0] = (selected_program.program_runner.total_rest_time / 600) % 10;
+
     display->clear_display();
     display->clear_colon();
 }
